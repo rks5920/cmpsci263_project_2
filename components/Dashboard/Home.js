@@ -3,32 +3,37 @@ import Link  from 'next/link';
 import Image from 'next/image';
 import styled from 'styled-components';
 
+
 const Home = () => {
   return (
-    <Square href="/dashboard">
-      <Image src="/home.png" alt="home" width={200} height={200}/>
+    <Square href="/">
+      <div id="home"></div>
     </Square>
   );
 };
 
 const Square = styled(Link)`
 
-  align-items: left;
-  justify-content: left;
-  width: 50px; // Adjust the size as needed
-  height: 50px; // Adjust the size as needed
-  background-color: #007bff; // Adjust the background color as needed
-  color: white;
+  width: 100%; // Adjust the size as needed
+  height: auto;
   border-radius: 4px; // Adjust for square or rounded corners
   text-decoration: none;
+  object-fit: cover;
+
   
-  svg {
-    width: 24px; // Adjust icon size as needed
-    height: 24px; // Adjust icon size as needed
+  
+  #home {
+    width: 100%;
+    height: 100%;
+    background-image: url('/home.png');
+    background-size: cover;
+    background-position: center;
   }
 
-  &:hover {
-    background-color: #0056b3; // Adjust hover effect as needed
+  #home:hover {
+     // Adjust hover effect as needed
+     background-image: url('/home2.png');
+     transition: background-image 0.3s ease-in-out;
   }
 `;
 
