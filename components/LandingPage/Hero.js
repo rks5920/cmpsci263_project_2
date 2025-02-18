@@ -35,6 +35,7 @@ const HeroTextColumn = styled.div`
 `;
 
 const Header = styled.h1`
+  padding:5px;
 `;
 
 const Highlight = styled.span`

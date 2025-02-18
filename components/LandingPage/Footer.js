@@ -22,16 +22,27 @@ const Footer = () => {
 };
 
 const FooterSection = styled.footer`
-
+  position: absolute;
+  bottom: 0;
+  left:0;
+  width: 100%;
+  padding: 10px;
 `;
 
 const FooterContainer = styled.div`
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%
 `;
 
-const LeftContainer = styled.div``;
+const LeftContainer = styled.div`
+  
+`;
 
-const CenterContainer = styled.div``;
+const CenterContainer = styled.div`
+  text-align: center;
+`;
 
 const RightContainer = styled.div`
 

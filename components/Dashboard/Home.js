@@ -1,20 +1,20 @@
 import React from 'react';
 import Link  from 'next/link';
-import { IoMdHome } from 'react-icons/io'; // Importing a home icon from react-icons
+import Image from 'next/image';
 import styled from 'styled-components';
 
 const Home = () => {
   return (
     <Square href="/dashboard">
-      <IoMdHome />
+      <Image src="/home.png" alt="home" width={200} height={200}/>
     </Square>
   );
 };
 
 const Square = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  align-items: left;
+  justify-content: left;
   width: 50px; // Adjust the size as needed
   height: 50px; // Adjust the size as needed
   background-color: #007bff; // Adjust the background color as needed

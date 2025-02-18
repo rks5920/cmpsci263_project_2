@@ -3,11 +3,20 @@ import { StateContext } from "@/context/StateContext"
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+  @font-face{
+    font-family: 'dogica';
+    src: url('/fonts/dogica.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   * 
   {
+    background-color: #d2cbbb;
+    font-family: 'dogica', sans-serif;
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding: 50;
   }
 `
 
@@ -15,7 +24,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
         <Head>
-          <title>MVP Starter</title>
+          <title>Flash Back</title>
           <meta name='description' content='Put a description here about your app'/>
           <meta name='robots' content='index, follow'/>
           <link rel="apple-touch-icon" sizes="180x180" href="/favicon_package/apple-touch-icon.png"/>

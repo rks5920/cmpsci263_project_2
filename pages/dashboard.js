@@ -11,11 +11,6 @@ const Dashboard = () => {
   
   const [age, setAge] = useState(22)
 
-  useEffectFunction(){
-
-  }
-
-  useEffect(useEffectFunction, [age])
 
   return (
     <Section>
