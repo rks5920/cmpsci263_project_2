@@ -33,14 +33,16 @@ const Navbar = () => {
 };
 
 const Nav = styled.nav`
+  position: fixed;
   display: flex;
   width: 100%;
-  height: 125px; 
+  height: 15vh; 
+  z-index: 1;
 `;
 
 const Left = styled.div`
   width: 15%;  
-  height: 125px; 
+  height: 15vh; 
   
 `;
 

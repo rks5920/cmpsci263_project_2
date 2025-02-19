@@ -1,13 +1,14 @@
-import Hero from "@/components/LandingPage/Hero"
+import ContentBox from "@/components/PageComponents/ContentBox"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"
-import Footer from "@/components/LandingPage/Footer"
+import Footer from "@/components/PageComponents/Footer"
 export default function Home() {
   return (
     <>
         <Navbar/>
-        <Hero />
+        <ContentBox>Hello World</ContentBox>
         <Footer />
     </>
   )
 }
+
