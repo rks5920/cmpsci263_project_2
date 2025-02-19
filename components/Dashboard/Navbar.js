@@ -13,11 +13,18 @@ const Navbar = () => {
     <Nav>
       <Left><Home></Home></Left>
       <Right>
-        <Top>Flash Back</Top>
+        <Top>
+          <Centering>
+          {/* <img src="/Logo.png" width="100" height="auto"></img> */}
+          Flash Back
+          </Centering>
+        </Top>
         <Bottom><NavLinks>
-          <NavButton dest="/auth/signup" text="Collections"/>
-          <NavButton dest="/auth/signup" text="Sign Up"/>
-          <NavButton dest="/auth/login" text="Log In"/>
+          <NavButton dest="/auth/signup" text="Collection" theme='tan'/>
+          <NavButton dest="/auth/signup" text="Friends"/>
+          <NavButton dest="/auth/signup" text="About"/>
+          <NavButton dest="/auth/signup" text="Sign Up" theme="blue"/>
+          <NavButton dest="/auth/login" text="Log In" theme="pink"/>
         </NavLinks></Bottom>
       </Right>
       
@@ -28,12 +35,12 @@ const Navbar = () => {
 const Nav = styled.nav`
   display: flex;
   width: 100%;
-  height: 15vh; 
+  height: 125px; 
 `;
 
 const Left = styled.div`
   width: 15%;  
-  height: 15vh; 
+  height: 125px; 
   
 `;
 
@@ -46,9 +53,14 @@ const Right = styled.div`
 const Top = styled.div`
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
+`;
 
+const Centering = styled.div`
+  width: auto;
+  height: 0px; 
+  position: relative;
+  left: 35%;
+  top: 25%;
 `;
 
 const Bottom = styled.div`

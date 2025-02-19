@@ -26,7 +26,9 @@ const FooterSection = styled.footer`
   bottom: 0;
   left:0;
   width: 100%;
+
   padding: 10px;
+  background-color: #ffb6c1;
 `;
 
 const FooterContainer = styled.div`
@@ -34,6 +36,7 @@ const FooterContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%
+  
 `;
 
 const LeftContainer = styled.div`

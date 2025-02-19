@@ -25,15 +25,18 @@ const Square = styled(Link)`
   #home {
     width: 100%;
     height: 100%;
-    background-image: url('/home.png');
+    background-image: url('/homeTrans.png');
     background-size: cover;
     background-position: center;
+    transition: background-image .5s ease-in-out .5s;
+    
   }
 
   #home:hover {
      // Adjust hover effect as needed
-     background-image: url('/home2.png');
-     transition: background-image 0.3s ease-in-out;
+     background-image: url('/homeBackground.png');
+     
+     
   }
 `;
 
