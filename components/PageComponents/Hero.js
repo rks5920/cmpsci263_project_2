@@ -3,54 +3,32 @@ import styled from 'styled-components';
 
 const Hero = () => {
   return (
-    <Section>
-      <Overlay>
-        <Container>
-          <HeroTextColumn>
-            <Header>
-              Welcome to the CMPSC 263
-              <Highlight>Start Here</Highlight>
-            </Header>
-            <SubheaderAndStarsColumn>
-              <SubHeader>Insert creative subheader here</SubHeader>
-              <CTAButton>Get Started</CTAButton>
-            </SubheaderAndStarsColumn>
-          </HeroTextColumn>
-        </Container>
-      </Overlay>
-    </Section>
+    <HeroContainer>
+      <HeroHeader>
+        Welcome to Flash Back! 
+      </HeroHeader>
+      <HeroContent>
+        Flash Back to a time before algorithms and short form content with this simple way to share your memories
+      </HeroContent>
+    </HeroContainer>
   );
 };
 
-const Section = styled.section`
-`;
+const HeroContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  justify-content: center;
+  `
 
-const Overlay = styled.div`
-`;
-
-const Container = styled.div`
-`;
-
-const HeroTextColumn = styled.div`
-`;
-
-const Header = styled.h1`
-  padding:5px;
-`;
-
-const Highlight = styled.span`
-`;
-
-const SubHeader = styled.h2`
-
-`;
-
-const SubheaderAndStarsColumn = styled.div`
-
-`;
-
-const CTAButton = styled.button`
-
-`;
+const HeroHeader = styled.h1`
+  justify-content: center;
+  padding: 20px;
+`
+const HeroContent = styled.div`
+  justify-content: center;
+`
 
 export default Hero;

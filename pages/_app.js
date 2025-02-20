@@ -10,9 +10,15 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
+  body {
+  background-color: #f5f5f5; /* Your desired background color */
+  margin: 0;
+  padding: 0;
+  background-color: #d2cbbb;
+  }
+
   * 
   {
-    background-color: #d2cbbb;
     font-family: 'dogica', sans-serif;
     box-sizing: border-box;
     margin: 0;
