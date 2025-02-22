@@ -20,7 +20,8 @@ const HeroContainer = styled.div`
   width: 100%;
   height: 100%;
   background-color: transparent;
-  justify-content: center;
+  align-items: center;
+  text-align: center;
   `
 
 const HeroHeader = styled.h1`
@@ -28,7 +29,10 @@ const HeroHeader = styled.h1`
   padding: 20px;
 `
 const HeroContent = styled.div`
+  width: 75%;
+  line-height: 1.5;
   justify-content: center;
+  
 `
 
 export default Hero;

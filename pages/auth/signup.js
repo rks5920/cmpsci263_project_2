@@ -5,6 +5,7 @@ import { useStateContext } from '@/context/StateContext'
 import { isEmailInUse, register} from '@/backend/Auth'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
+import ContentBox from '@/components/PageComponents/ContentBox'
 const Signup = () => {
 
   const { user, setUser } = useStateContext()
@@ -45,7 +46,8 @@ const Signup = () => {
   return (
     <>
     <Navbar/>
-    <Section>
+    <ContentBox>
+      <Section>
         <Header>Signup</Header>
         <InputTitle>Email</InputTitle>
         <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
@@ -57,12 +59,24 @@ const Signup = () => {
         <MainButton onClick={handleSignup}>Signup</MainButton>
 
     </Section>
+    </ContentBox>
+    
     </>
   )
 }
 
 const Section = styled.section`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  align-items: center;
+  text-align: center;
+
+  > * {
+    padding: 20px; 
+  }
 `;
 
 const Header = styled.h1`
