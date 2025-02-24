@@ -48,8 +48,8 @@ const ImgBorder = styled.div`
     height: auto;
     margin-left: auto;
     margin-right: auto;
-    border: 4px solid #64c3d9;
-    position: relative; /* Needed for pseudo-element positioning */
+    border: 4px solid #ffb6c1;
+    position: relative;
 
     &::after {
         content: '';
@@ -59,7 +59,7 @@ const ImgBorder = styled.div`
         border: 4px solid black;
         left: -8px;
         top: -8px;
-        z-index: -1;
+        z-index: 1;
         pointer-events: none;
     }
 `
