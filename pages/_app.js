@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-  background-color: #f5f5f5; /* Your desired background color */
+  background-color: #f5f5f5;
   margin: 0;
   padding: 0;
   background-color: #d2cbbb;

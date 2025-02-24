@@ -14,9 +14,9 @@ const Home = () => {
 
 const Square = styled(Link)`
 
-  width: 100%; // Adjust the size as needed
+  width: 100%;
   height: auto;
-  border-radius: 4px; // Adjust for square or rounded corners
+  border-radius: 4px;
   text-decoration: none;
   object-fit: cover;
 
@@ -33,7 +33,7 @@ const Square = styled(Link)`
   }
 
   #home:hover {
-     // Adjust hover effect as needed
+     
      background-image: url('/homeBackground.png');
      
      

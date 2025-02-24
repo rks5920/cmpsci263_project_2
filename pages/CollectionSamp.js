@@ -13,11 +13,8 @@ export default function Home() {
         <ContentBox>
             <Header>Welcome to (users) Collection</Header>
             <PostContainer>
-                <ThumbNail image="/Polaroid/Sample.png" text="Paris"></ThumbNail>
-                <ThumbNail image="/Polaroid/Sample.png" text="Paris"></ThumbNail>
-                <ThumbNail image="/Polaroid/Sample.png" text="Paris"></ThumbNail>
-                <ThumbNail image="/Polaroid/Sample.png" text="Paris"></ThumbNail>
-                <ThumbNail image="/Polaroid/Sample.png" text="Paris"></ThumbNail>
+                <ThumbNail image="/Polaroid/Sample.png" text="Paris" dest="/PostSample"></ThumbNail>
+                <ThumbNail image="/Polaroid/Sample.png" text="Paris" dest="/PostSample"></ThumbNail>
                 
                 
                 
@@ -43,6 +40,6 @@ const PostContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: left;
-    gap: 110px;
+    gap: 10%;
     
 `

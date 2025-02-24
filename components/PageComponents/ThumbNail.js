@@ -4,14 +4,14 @@ import Link from 'next/link';
 
 
 
-const ThumbNail = ({image, text}) => {
+const ThumbNail = ({image, text, dest}) => {
 
 
   return (
     
     <Wrapper>
-    <ImageBorder href="./">
-    <Image href="./" bg={image} />
+    <ImageBorder href={dest}>
+    <Image href={dest} bg={image} />
     <Text>{text}</Text>
     </ImageBorder>
     </Wrapper>
@@ -24,6 +24,7 @@ const ThumbNail = ({image, text}) => {
 const Wrapper = styled.div`
     aspect-ratio: 712 / 860;
     width: 25%;
+    margin-bottom: 10%;
     
 `
 
