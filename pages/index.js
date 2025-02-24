@@ -3,6 +3,8 @@ import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"
 import Footer from "@/components/PageComponents/Footer"
 import Hero from "@/components/PageComponents/Hero"
+import NavButton from "@/components/Dashboard/NavButton"
+
 export default function Home() {
   return (
     <>

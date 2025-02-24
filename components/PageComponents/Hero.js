@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import NavButton from '../Dashboard/NavButton';
 
 const Hero = () => {
   return (

@@ -15,7 +15,7 @@ const Navbar = () => {
       <Right>
         <NavLinks>
           <HoldLeft>
-            <NavButton dest="/auth/signup" text="Collection" theme='tan'/>
+            <NavButton dest="/CollectionSamp" text="Collection" theme='tan'/>
             <NavButton dest="/auth/signup" text="Friends"/>
             <NavButton dest="/auth/signup" text="About"/>
           </HoldLeft>

@@ -5,6 +5,10 @@ import { useStateContext } from '@/context/StateContext'
 import {login, isEmailInUse} from '@/backend/Auth'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
+import NavButton from '@/components/Dashboard/NavButton'
+import ContentBox from '@/components/PageComponents/ContentBox'
+import Footer from '@/components/PageComponents/Footer'
+
 const Login = () => {
 
   const { user, setUser } = useStateContext()
@@ -22,25 +26,47 @@ const Login = () => {
   return (
     <>
     <Navbar/>
-    <Section>
-        <Header>Login</Header>
+    <ContentBox>
+      <Section>
+        <Padding>
+        <Header>Log In</Header>
         <InputTitle>Email</InputTitle>
         <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
         <InputTitle>Password</InputTitle>
         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-
         <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
-
-        <MainButton onClick={handleLogin}>Login</MainButton>
+        </Padding>
+        <NavButton onClick={handleLogin} dest="./" text="Log In" theme="pink"></NavButton>
+        <p>If you have not already signed up, <a href="/auth/signup">Sign Up</a>!</p> 
 
     </Section>
+    </ContentBox>
+    <Footer/>
     </>
   )
 }
 
 const Section = styled.section`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  align-items: center;
+  text-align: center;
+
 `;
+
+const Padding = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+> *{
+  padding: 20px;
+}
+`
 
 const Header = styled.h1`
   font-size: 24px; /* Adjusted for better scalability */
@@ -48,37 +74,28 @@ const Header = styled.h1`
 
 const Input = styled.input`
   font-size: 16px;
-
+  padding: 5px;
+  line-height: 20px;
+  box-sizing: content-box;
+  height: 20px;
 `;
 
 const InputTitle = styled.label` /* Changed to label for semantics */
   font-size: 14px;
-  color: #666;
 `;
 
 const MainButton = styled.button`
-  background-color: #007bff;
-  &:hover {
-    background-color: #0056b3;
-  }
+  font-size: 16px;
+
 `;
 
 const UserAgreementText = styled.p`
   font-size: 12px;
-  color: #666;
-  margin-top: 20px;
-  text-align: center;
 `;
 
-const UserAgreementSpan = styled(Link)`
+const UserAgreementSpan = styled(Link)` 
   color: #007bff;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
-  &:not(:last-of-type)::after {
-    content: ', '; /* Adds comma between links */
-  }
+
 `;
 
 

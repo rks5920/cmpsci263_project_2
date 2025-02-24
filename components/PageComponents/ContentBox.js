@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import NavButton from '../Dashboard/NavButton';
 
 const ContentBox = ({ children }) => {
   return (
     <Content><CenterBox>
-      { children }
+      {children}
     </CenterBox></Content>
   );
 };
@@ -29,7 +30,7 @@ const CenterBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  &::after {
+  &::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -38,6 +39,7 @@ const CenterBox = styled.div`
     left: -8px;
     top: -8px;
     z-index: 0;
+    pointer-events: none;
   }
 `;
 

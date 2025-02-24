@@ -6,6 +6,8 @@ import { isEmailInUse, register} from '@/backend/Auth'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
 import ContentBox from '@/components/PageComponents/ContentBox'
+import NavButton from '@/components/Dashboard/NavButton'
+import Footer from '@/components/PageComponents/Footer'
 const Signup = () => {
 
   const { user, setUser } = useStateContext()
@@ -48,19 +50,20 @@ const Signup = () => {
     <Navbar/>
     <ContentBox>
       <Section>
-        <Header>Signup</Header>
+        <Padding>
+        <Header>Sign up</Header>
         <InputTitle>Email</InputTitle>
         <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
         <InputTitle>Password</InputTitle>
         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-
         <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
-
-        <MainButton onClick={handleSignup}>Signup</MainButton>
+        </Padding>
+        <NavButton onClick={handleSignup} dest="/" text="Sign Up" theme="blue"></NavButton>
+        <p>If you already have an accound, <a href="/auth/login">Log In</a>!</p> 
 
     </Section>
     </ContentBox>
-    
+    <Footer/>
     </>
   )
 }
@@ -74,10 +77,18 @@ const Section = styled.section`
   align-items: center;
   text-align: center;
 
-  > * {
-    padding: 20px; 
-  }
 `;
+
+const Padding = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+> *{
+  padding: 20px;
+}
+`
 
 const Header = styled.h1`
   font-size: 24px; /* Adjusted for better scalability */
@@ -85,7 +96,10 @@ const Header = styled.h1`
 
 const Input = styled.input`
   font-size: 16px;
-
+  padding: 5px;
+  line-height: 20px;
+  box-sizing: content-box;
+  height: 20px;
 `;
 
 const InputTitle = styled.label` /* Changed to label for semantics */
