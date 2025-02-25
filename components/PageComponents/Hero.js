@@ -58,7 +58,6 @@ const Input = styled.input`
   font-size: 16px;
   line-height: 40px;
   box-sizing: content-box;
-  //height: 30px;
 `;
 
 export default Hero;

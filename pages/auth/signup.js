@@ -22,23 +22,24 @@ const Signup = () => {
         return false;
     }
     console.log('so far so good...')
-    const emailResponse = await isEmailInUse(email)
-    console.log('email response', emailResponse)
-    if(emailResponse.length == 0 ){
-        return false;
-    }
+    //const emailResponse = await isEmailInUse(email)
+    //console.log('email response', emailResponse)
+    // if(emailResponse.length == 0 ){
+    //     return false;
+    // }
 
     return true;
 }
 
   async function handleSignup(){
     const isValidEmail = await validateEmail()
-    // console.log('isValidEmail', isValidEmail)
+    console.log('isValidEmail', isValidEmail)
     // if(!isValidEmail){ return; }
     
     try{
         await register(email, password, setUser)
         router.push('/dashboard')
+        console.log('Signed Up')
     }catch(err){
         console.log('Error Signing Up', err)
     }
@@ -58,8 +59,8 @@ const Signup = () => {
         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
         </Padding>
-        <NavButton onClick={handleSignup} dest="/" text="Sign Up" theme="blue"></NavButton>
-        <p>If you already have an accound, <a href="/auth/login">Log In</a>!</p> 
+        <NavButton onClick={handleSignup()} dest="./signup" text="Sign Up" theme="blue" disabled></NavButton>
+        <p>If you already have an account, <a href="/auth/login">Log In</a>!</p> 
 
     </Section>
     </ContentBox>
