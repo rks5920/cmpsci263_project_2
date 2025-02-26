@@ -8,6 +8,9 @@ import Navbar from '@/components/Dashboard/Navbar'
 import ContentBox from '@/components/PageComponents/ContentBox'
 import NavButton from '@/components/Dashboard/NavButton'
 import Footer from '@/components/PageComponents/Footer'
+import { auth } from "@/backend/Firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from "firebase/auth";
+
 const Signup = () => {
 
   const { user, setUser } = useStateContext()
@@ -35,14 +38,15 @@ const Signup = () => {
     const isValidEmail = await validateEmail()
     console.log('isValidEmail', isValidEmail)
     // if(!isValidEmail){ return; }
-    
+
     try{
-        await register(email, password, setUser)
-        router.push('/dashboard')
-        console.log('Signed Up')
+      await register(email, password, setUser)
+      router.push('/')
     }catch(err){
-        console.log('Error Signing Up', err)
-    }
+      console.log('Error Signing Up', err)
+  }
+    
+
   }
 
 
@@ -59,7 +63,7 @@ const Signup = () => {
         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
         </Padding>
-        <NavButton onClick={handleSignup()} dest="./signup" text="Sign Up" theme="blue" disabled></NavButton>
+        <a onClick={handleSignup}>Sign Up</a>
         <p>If you already have an account, <a href="/auth/login">Log In</a>!</p> 
 
     </Section>
