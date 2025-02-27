@@ -38,7 +38,7 @@ export async function login(email,password, setUser){
     });
 }
 
-export async function logOut(){
+export async function logOut(setUser){
   signOut(auth)
   .then(() => {
     // Sign-out successful.

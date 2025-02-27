@@ -7,6 +7,8 @@ import Navbar from '@/components/Dashboard/Navbar'
 import ContentBox from '@/components/PageComponents/ContentBox'
 import NavButton from '@/components/Dashboard/NavButton'
 import Footer from '@/components/PageComponents/Footer'
+import { addPost } from '@/backend/Database'
+import { InvsButton } from './auth/signup'
 
 
 const AddPage = () => {
@@ -16,14 +18,15 @@ const AddPage = () => {
   const [ title, setTitle ] = useState('')
   const [ comment, setComment ] = useState('')
   const router = useRouter()
+  
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     router.push('/');
+  //   }
+  // });
 
-  if (user){
+  if (true){
     return (
         <>
         <Navbar/>
@@ -39,7 +42,7 @@ const AddPage = () => {
             <Input type="text" value={comment} onChange={(e) => setComment(e.target.value)}/>
             <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
             </Padding>
-            <NavButton dest="./signup" theme="blue" text={"Sign Up"}/>
+            <InvsButton onClick={addPost()}><NavButton dest="" theme="blue" text={"Add Post"}/></InvsButton>
             <p>If you already have an account, <a href="/auth/login">Log In</a>!</p> 
 
         </Section>
@@ -101,15 +104,6 @@ const UserAgreementSpan = styled(Link)`
   color: #007bff;
 
 `;
-
-export const InvsButton = styled.button`
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-`
 
 
 export default AddPage

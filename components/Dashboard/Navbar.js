@@ -10,6 +10,7 @@ import { InvsButton } from '@/pages/auth/signup';
 const Navbar = () => {
   const { user, setUser } = useStateContext()
   const router = useRouter()
+  const logOutUser = () => logOut(setUser)
 
   async function signOut(){
       
@@ -34,7 +35,7 @@ const Navbar = () => {
             </HoldLeft>
             <HoldRight>
             <NavButton dest="/addPage" text="Add Post" theme="blue"/>
-            <InvsButton onClick={logOut()}><NavButton dest="" text="Sign Out" theme="pink"/></InvsButton>
+            <InvsButton onClick={logOutUser}><NavButton dest="" text="Sign Out" theme="pink"/></InvsButton>
             </HoldRight>
             
           </NavLinks>
