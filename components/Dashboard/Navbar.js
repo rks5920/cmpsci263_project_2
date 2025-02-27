@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { logOut } from '@/backend/Auth';
 import { useStateContext } from '@/context/StateContext';
 import Home from '@/components/Dashboard/Home';
-import NavButton from '@/components/Dashboard/NavButton';
-import { InvsButton } from '@/pages/auth/signup';
+import GeneralButton from '../GeneralButton';
+import NavButton from './NavButton';
 
 const Navbar = () => {
   const { user, setUser } = useStateContext()
@@ -35,7 +35,7 @@ const Navbar = () => {
             </HoldLeft>
             <HoldRight>
             <NavButton dest="/addPage" text="Add Post" theme="blue"/>
-            <InvsButton onClick={logOutUser}><NavButton dest="" text="Sign Out" theme="pink"/></InvsButton>
+            <GeneralButton click={logOutUser} text="Sign Out" theme="pink"/>
             </HoldRight>
             
           </NavLinks>

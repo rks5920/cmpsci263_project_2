@@ -6,10 +6,8 @@ import { isEmailInUse, register} from '@/backend/Auth'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
 import ContentBox from '@/components/PageComponents/ContentBox'
-import NavButton from '@/components/Dashboard/NavButton'
+import GeneralButton from '@/components/GeneralButton'
 import Footer from '@/components/PageComponents/Footer'
-import { auth } from "@/backend/Firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from "firebase/auth";
 
 const Signup = () => {
 
@@ -63,7 +61,7 @@ const Signup = () => {
         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
         </Padding>
-        <InvsButton onClick={handleSignup}><NavButton dest="./signup" theme="blue" text={"Sign Up"}/></InvsButton>
+        <GeneralButton click={handleSignup} theme="blue" text={"Sign Up"}/>
         <p>If you already have an account, <a href="/auth/login">Log In</a>!</p> 
 
     </Section>
@@ -96,7 +94,7 @@ const Padding = styled.div`
 `
 
 const Header = styled.h1`
-  font-size: 24px; /* Adjusted for better scalability */
+  font-size: 24px;
 `;
 
 const Input = styled.input`
@@ -107,7 +105,7 @@ const Input = styled.input`
   height: 20px;
 `;
 
-const InputTitle = styled.label` /* Changed to label for semantics */
+const InputTitle = styled.label`
   font-size: 14px;
 `;
 
@@ -124,15 +122,5 @@ const UserAgreementSpan = styled(Link)`
   color: #007bff;
 
 `;
-
-export const InvsButton = styled.button`
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-`
-
 
 export default Signup

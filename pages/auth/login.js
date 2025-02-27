@@ -5,10 +5,9 @@ import { useStateContext } from '@/context/StateContext'
 import {login, isEmailInUse} from '@/backend/Auth'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
-import NavButton from '@/components/Dashboard/NavButton'
 import ContentBox from '@/components/PageComponents/ContentBox'
 import Footer from '@/components/PageComponents/Footer'
-import { InvsButton } from './signup'
+import GeneralButton from '@/components/GeneralButton'
 
 const Login = () => {
 
@@ -21,8 +20,7 @@ const Login = () => {
 
   async function handleLogin(){
     try{
-        let error = await login(email, password, setUser)
-        console.log(error)
+        await login(email, password, setUser)
         router.push('/')
         }catch(err){
       }
@@ -42,7 +40,7 @@ const Login = () => {
         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
         </Padding>
-        <InvsButton onClick={handleLogin}><NavButton dest="./login" text="Log In" theme="pink"></NavButton></InvsButton>
+        <GeneralButton click={handleLogin}text="Log In" theme="pink"></GeneralButton>
         <p>If you have not already signed up, <a href="/auth/signup">Sign Up</a>!</p> 
 
     </Section>

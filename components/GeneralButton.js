@@ -1,23 +1,22 @@
 import React from 'react';
-import Link  from 'next/link';
 import styled from 'styled-components';
 
 
-const NavButton = ({ text, dest, theme ,onClick}) => {
+const GeneralButton = ({ text, theme, click}) => {
 
   if(theme == "blue"){
     return (
-      <StyledButtonBlue href={dest} id={theme}>{text}</StyledButtonBlue>
+      <StyledButtonBlue onClick={click} id={theme}>{text}</StyledButtonBlue>
     );
   }
   else if(theme == "pink"){
     return (
-      <StyledButtonPink href={dest} id={theme}>{text}</StyledButtonPink>
+      <StyledButtonPink onClick={click} id={theme}>{text}</StyledButtonPink>
     );
   }
   else{
     return (
-      <StyledButton href={dest} id={theme}>{text}</StyledButton>
+      <StyledButton onClick={click} id={theme}>{text}</StyledButton>
     );
   }
   
@@ -100,4 +99,4 @@ const StyledButtonBlue = styled.button`
     color: #75d2ff;
   }
 `
-export default NavButton;
+export default GeneralButton;
