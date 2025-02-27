@@ -1,14 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
-import Link from 'next/link'
+import { useRouter } from 'next/router';
 import { logOut } from '@/backend/Auth';
 import { useStateContext } from '@/context/StateContext';
 import Home from '@/components/Dashboard/Home';
 import NavButton from '@/components/Dashboard/NavButton';
+import { InvsButton } from '@/pages/auth/signup';
 
 const Navbar = () => {
-  const { setUser } = useStateContext()
+  const { user, setUser } = useStateContext()
+  const router = useRouter()
 
+  async function signOut(){
+      
+      try{
+        await logOut()
+        router.push('/')
+        }catch(err){
+        console.log('Error Logging Out:', err)
+    }
+  }
+
+  if(user){
+    return(
+      <Nav>
+        <Left><Home></Home></Left>
+        <Right>
+          <NavLinks>
+            <HoldLeft>
+              <NavButton dest="/CollectionSamp" text="Collection" theme='tan'/>
+              <NavButton dest="/auth/signup" text="Friends"/>
+              <NavButton dest="/auth/signup" text="About"/>
+            </HoldLeft>
+            <HoldRight>
+            <NavButton dest="" text="Add Post" theme="blue"/>
+            <InvsButton onClick={logOut()}><NavButton dest="" text="Sign Out" theme="pink"/></InvsButton>
+            </HoldRight>
+            
+          </NavLinks>
+        </Right>
+        
+      </Nav>
+    );
+  }else{
   return (
     <Nav>
       <Left><Home></Home></Left>
@@ -26,11 +60,11 @@ const Navbar = () => {
           
         </NavLinks>
       </Right>
-      
+
     </Nav>
   );
 };
-
+};
 const Nav = styled.nav`
   display: flex;
   width: 100%;

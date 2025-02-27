@@ -63,7 +63,7 @@ const Signup = () => {
         <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
         </Padding>
-        <a onClick={handleSignup}>Sign Up</a>
+        <InvsButton onClick={handleSignup}><NavButton dest="./signup" theme="blue" text={"Sign Up"}/></InvsButton>
         <p>If you already have an account, <a href="/auth/login">Log In</a>!</p> 
 
     </Section>
@@ -124,6 +124,15 @@ const UserAgreementSpan = styled(Link)`
   color: #007bff;
 
 `;
+
+export const InvsButton = styled.button`
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+`
 
 
 export default Signup
