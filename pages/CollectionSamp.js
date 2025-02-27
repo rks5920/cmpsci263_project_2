@@ -1,12 +1,25 @@
 import ContentBox from "@/components/PageComponents/ContentBox"
+import { useEffect } from "react"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"
 import Footer from "@/components/PageComponents/Footer"
 import Hero from "@/components/PageComponents/Hero"
 import ThumbNail from "@/components/PageComponents/ThumbNail"
+import { useStateContext } from "@/context/StateContext"
+import { useRouter } from "next/router"
 
 
 export default function Home() {
+
+  const { user, setUser } = useStateContext()
+  const router = useRouter()
+
+  useEffect(() => {
+      if (!user) {
+        router.push('/');
+      }
+    }, [user]);
+
   return (
     <>
         <Navbar/>

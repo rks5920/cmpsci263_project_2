@@ -33,7 +33,7 @@ const Navbar = () => {
               <NavButton dest="/auth/signup" text="About"/>
             </HoldLeft>
             <HoldRight>
-            <NavButton dest="" text="Add Post" theme="blue"/>
+            <NavButton dest="/addPage" text="Add Post" theme="blue"/>
             <InvsButton onClick={logOut()}><NavButton dest="" text="Sign Out" theme="pink"/></InvsButton>
             </HoldRight>
             
