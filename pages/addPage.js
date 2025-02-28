@@ -5,19 +5,21 @@ import { useStateContext } from '@/context/StateContext'
 import Link from 'next/link'
 import Navbar from '@/components/Dashboard/Navbar'
 import ContentBox from '@/components/PageComponents/ContentBox'
-import NavButton from '@/components/Dashboard/NavButton'
 import GeneralButton from '@/components/GeneralButton'
 import Footer from '@/components/PageComponents/Footer'
 import { addPost } from '@/backend/Database'
+
 
 
 const AddPage = () => {
 
   const { user, setUser } = useStateContext()
   const [ img, setImg ] = useState('')
+  const [ img_name, setImgName ] = useState('')
   const [ title, setTitle ] = useState('')
   const [ comment, setComment ] = useState('')
   const router = useRouter()
+  const addPostFunc = () => addPost(user,title,img,img_name,comment)
   
 
   // useEffect(() => {
@@ -35,15 +37,15 @@ const AddPage = () => {
             <Padding>
             <Header>Add a Post</Header>
             <InputTitle>Title</InputTitle>
-            <Input type="file"  onChange={(e) => setImg(e.target.value)}/>
+            <Input type="file"  onChange={(e) => {setImg(e.target.files[0]); setImgName(String(e.target.files[0].name));}}/>
             <InputTitle>Title</InputTitle>
             <Input type="title" value={title} onChange={(e) => setTitle(e.target.value)}/>
             <InputTitle>Comment</InputTitle>
             <Input type="text" value={comment} onChange={(e) => setComment(e.target.value)}/>
             <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
             </Padding>
-            <GeneralButton click={addPost} theme="blue" text={"Add Post"}/>
-            <p>If you already have an account, <a href="/auth/login">Log In</a>!</p> 
+            <GeneralButton click={addPostFunc} theme="blue" text={"Add Post"}/>
+            <p>If you already have an account, <a href="/auth/login">{img_name}</a>!</p> 
 
         </Section>
         </ContentBox>

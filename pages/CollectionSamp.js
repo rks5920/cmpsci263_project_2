@@ -7,12 +7,16 @@ import Hero from "@/components/PageComponents/Hero"
 import ThumbNail from "@/components/PageComponents/ThumbNail"
 import { useStateContext } from "@/context/StateContext"
 import { useRouter } from "next/router"
+import GeneralButton from "@/components/GeneralButton"
+import { getUserPosts } from "@/backend/Database"
 
 
 export default function Home() {
 
   const { user, setUser } = useStateContext()
   const router = useRouter()
+  const logOutUser = () => logOut(setUser)
+  const getUserPostsFunc = () => getUserPosts("rks5920@psu.edu")
 
   useEffect(() => {
       if (!user) {
@@ -30,7 +34,7 @@ export default function Home() {
                 <ThumbNail image="/Polaroid/Sample.png" text="Paris" dest="/PostSample"></ThumbNail>
                 
                 
-                
+                <GeneralButton click={getUserPostsFunc}/>
                 
             </PostContainer>
         </ContentBox>

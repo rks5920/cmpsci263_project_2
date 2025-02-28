@@ -1,15 +1,46 @@
-import { database } from "./Firebase";
-import { setDoc, doc } from "firebase/firestore"; 
+import { database, storage } from "./Firebase";
+import { setDoc, doc, collection, addDoc, getDocs } from "firebase/firestore"; 
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
-export async function addPost() {
-    const newDocData = {first: "alan", last: "jackson"};
-    const docRef = doc(database, "posts", "postID")
+export async function addPost(user,title,img,img_name,comment) {
+    //Ref to the img in the storage
     
-    setDoc(docRef, newDocData)
-        .then(() => {
+
+
+    //Data for the post
+    const newDocData = {title: String(title), comment:String(comment), img_name:String(img_name)};
+    //doc ref for the post=>User
+    const docRef = doc(database,"posts", String(user.email))
+    //doc ref for the subcollection of individual posts
+    const postCollectionRef = collection(docRef, "IndivPosts");
+    
+    // upload the img then upload the post data
+    addDoc(postCollectionRef, newDocData)
+        .then((metaData) => {
             console.log("Document written!")
+            console.log("User Email:", user.email);
+            console.log("Metadata ID:", metaData.id);
+            console.log("File Name:", img_name);
+            const storageRef = ref(storage,String(user.email) + "/"+String(metaData.id) +"_"+ img_name);
+            uploadBytes(storageRef, img)
+                .then((snapshot) => {
+                console.log('Uploaded a blob or file!');
+                });
         })
         .catch((error) => {
             console.error("Error:", error);
         })
+    
+}
+
+export async function getUserPosts(email){
+    const docRef = doc(database,"posts", String(email))
+    //doc ref for the subcollection of individual posts
+    const postCollectionRef = collection(docRef, "IndivPosts");
+    // Query a reference to a subcollection
+    const querySnapshot = await getDocs(postCollectionRef);
+    querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    });
 }
