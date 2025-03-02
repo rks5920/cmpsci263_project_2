@@ -29,7 +29,7 @@ const Navbar = () => {
         <Right>
           <NavLinks>
             <HoldLeft>
-              <NavButton dest="/CollectionSamp" text="Collection" theme='tan'/>
+              <NavButton dest={"/Collection/"+String(user.email)} text="Collection" theme='tan'/>
               <NavButton dest="/auth/signup" text="Friends"/>
               <NavButton dest="/auth/signup" text="About"/>
             </HoldLeft>
@@ -50,9 +50,9 @@ const Navbar = () => {
       <Right>
         <NavLinks>
           <HoldLeft>
-            <NavButton dest="/CollectionSamp" text="Collection" theme='tan'/>
-            <NavButton dest="/auth/signup" text="Friends"/>
-            <NavButton dest="/auth/signup" text="About"/>
+            <NavButton dest="/auth/login" text="Collection" theme='tan'/>
+            <NavButton dest="/auth/login" text="Friends"/>
+            <NavButton dest="/auth/login" text="About"/>
           </HoldLeft>
           <HoldRight>
             <NavButton dest="/auth/signup" text="Sign Up" theme="blue"/>

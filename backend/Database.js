@@ -52,4 +52,29 @@ export async function getUserPosts(email){
     return docLst
     }
 
+export async function getUserPost(email,postID){
+    const docRef = doc(database,"posts", String(email))
+    //doc ref for the subcollection of individual posts
+    const postCollectionRef = collection(docRef, "IndivPosts");
+    // Query a reference to a subcollection
+    const querySnapshot = await getDocs(postCollectionRef);
+    let docLst = [];
+     for (let doc of querySnapshot.docs) {
+        // doc.data() is never undefined for query doc snapshots
+        //console.log(doc.id, " => ", doc.data().title);
+        const imageRef = ref(storage, email+"/"+String(doc.id)+"_"+doc.data().img_name);
+        try{
+            let imgURL = await getDownloadURL(imageRef);
+                if(doc.id == postID){
+                    console.log("Post Found");
+                    docLst.push([doc.id, doc.data(), imgURL]);
+                }
+        }
+        catch(error){
+            console.error("Error getting image URL:", error);
+        }
+      }
+    return docLst
+    }
+
     

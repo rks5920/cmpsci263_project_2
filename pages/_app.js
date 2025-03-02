@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { StateContext } from "@/context/StateContext"
 import { createGlobalStyle } from 'styled-components'
 
+
 export const GlobalStyle = createGlobalStyle`
   @font-face{
     font-family: 'dogica';
@@ -42,6 +43,8 @@ export default function App({ Component, pageProps }) {
         </Head>
 
         <GlobalStyle />
+        
+        
 
       <StateContext>
         <Component {...pageProps} />

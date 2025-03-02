@@ -3,37 +3,31 @@ import { useEffect, useRef, useState } from "react"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"
 import Footer from "@/components/PageComponents/Footer"
-import Hero from "@/components/PageComponents/Hero"
 import ThumbNail from "@/components/PageComponents/ThumbNail"
 import { useStateContext } from "@/context/StateContext"
 import { useRouter } from "next/router"
 import GeneralButton from "@/components/GeneralButton"
 import { getUserPosts } from "@/backend/Database"
-import { doc } from "firebase/firestore"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { useParams } from "react-router";
 
 
 export default function Collection() {
-  const {userEmail} = useParams;
+  
   const { user, setUser } = useStateContext();
   const router = useRouter();
+  const {userEmail} = router.query;
   const postArrayRef = useRef([]);
   const [renderFlag, setRenderFlag] = useState(false);
 
   useEffect(() => {
-      if (!user) {
-        router.push('/');
+    if (userEmail){
+      postArrayRef.current = [];
+      getUserPostsFunc();
       }
-      else{
-        postArrayRef.current = [];
-        getUserPostsFunc();
-      }
-    });
+    }, [userEmail]);
 
   async function getUserPostsFunc(){
     try{
-      const docLst = await getUserPosts("rks5920@psu.edu");
+      const docLst = await getUserPosts(userEmail);
       handleDocReturn(docLst);
     }
     catch(error){
@@ -45,7 +39,7 @@ export default function Collection() {
   function handleDocReturn(docLst){
     console.log(docLst);
     for (let doc=0; doc<docLst.length; doc++){
-      postArrayRef.current.push(<ThumbNail image={String(docLst[doc][2])} text={docLst[doc][1].title} dest="/PostSample"/>);
+      postArrayRef.current.push(<ThumbNail key={docLst[doc][0]} image={String(docLst[doc][2])} text={docLst[doc][1].title} dest={"/Post/"+String(userEmail)+"/"+docLst[doc][0]}/>);
     }
     console.log("Post Array:",postArrayRef.current);
     setRenderFlag(true);
@@ -56,7 +50,7 @@ export default function Collection() {
     <>
         <Navbar/>
         <ContentBox>
-            <Header>Welcome to (users) Collection</Header>
+            <Header>Welcome to {userEmail} Collection</Header>
             <PostContainer>
                 {postArrayRef.current}
             </PostContainer>

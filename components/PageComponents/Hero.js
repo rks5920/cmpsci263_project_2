@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import NavButton from '../Dashboard/NavButton';
+import { useState } from 'react';
 
 const Hero = () => {
+  const [ desiredUser, setDesUser ] = useState('')
+
   return (
     <HeroContainer>
       <HeroHeader>
@@ -13,9 +16,9 @@ const Hero = () => {
       </HeroContent>
       <SearchBar>
         <h1>Search by Email</h1>
-        <Input type="email"></Input>
+        <Input type="DesiredUser" value={desiredUser} onChange={(e) => setDesUser(e.target.value)}/>
       </SearchBar>
-      <NavButton text="Search" dest="./" theme="blue"/>
+      <NavButton text="Search" dest={"/Collection/"+String(desiredUser)} theme="blue"/>
       
     </HeroContainer>
   );
