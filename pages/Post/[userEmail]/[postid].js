@@ -15,9 +15,10 @@ export default function Home() {
   const [title, setTitle] = useState("no title found");
   const [imgURL, setURL] = useState("");
   const [comment, setComment] = useState("no comment found");
-  //const currentUrl = window.location.href;
+  const [qrCode, setqrCode] = useState("");
 
   useEffect(() => {
+    setqrCode(window.location.href);
     if (userEmail && postid){
       postArrayRef.current = [];
       getUserPostFunc();
@@ -30,7 +31,6 @@ export default function Home() {
       setTitle(docLst[0][1].title);
       setURL(docLst[0][2]);
       setComment(docLst[0][1].comment);
-      //handleDocReturn(docLst);
     }
     catch(error){
       console.error("Error:", error);
@@ -50,8 +50,8 @@ export default function Home() {
                 <TextDiv>
                     <Text>{comment}</Text>
                 </TextDiv>
-                <img src={"https://api.qrserver.com/v1/create-qr-code/?data="+String(window.location.href)+"&amp;size=100x100"} alt="" title="" width="100px"/>
-                
+                <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/>
+                <div height="100vh"/>
             </PostContainer>
         </ContentBox>
         <Footer />
@@ -76,7 +76,7 @@ const PostContainer = styled.div`
 `
 
 const ImgBorder = styled.div`
-    width: 70%;
+    max-width: 70%;
     height: auto;
     margin-left: auto;
     margin-right: auto;
@@ -97,7 +97,8 @@ const ImgBorder = styled.div`
 `
 
 const Image = styled.img`
-    width: 100%;
+    //width: 100%;
+    max-height: 50vh;
 `
 
 const Text = styled.p`
