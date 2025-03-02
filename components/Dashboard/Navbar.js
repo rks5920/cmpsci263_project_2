@@ -12,15 +12,6 @@ const Navbar = () => {
   const router = useRouter()
   const logOutUser = () => logOut(setUser)
 
-  async function signOut(){
-      
-      try{
-        await logOut()
-        router.push('/')
-        }catch(err){
-        console.log('Error Logging Out:', err)
-    }
-  }
 
   if(user){
     return(
@@ -30,8 +21,8 @@ const Navbar = () => {
           <NavLinks>
             <HoldLeft>
               <NavButton dest={"/Collection/"+String(user.email)} text="Collection" theme='tan'/>
-              <NavButton dest="/auth/signup" text="Friends"/>
-              <NavButton dest="/auth/signup" text="About"/>
+              <NavButton dest="/construction" text="Friends"/>
+              <NavButton dest="/construction" text="About"/>
             </HoldLeft>
             <HoldRight>
             <NavButton dest="/addPage" text="Add Post" theme="blue"/>

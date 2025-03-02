@@ -72,6 +72,6 @@ const Text = styled.p`
     top: 14%;
     left: 9%;
     //line-height: 15%;
-    font-size: 2.5vh;
+    font-size: 1.75vw;
 `
 export default ThumbNail;

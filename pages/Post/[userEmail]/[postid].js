@@ -15,6 +15,7 @@ export default function Home() {
   const [title, setTitle] = useState("no title found");
   const [imgURL, setURL] = useState("");
   const [comment, setComment] = useState("no comment found");
+  //const currentUrl = window.location.href;
 
   useEffect(() => {
     if (userEmail && postid){
@@ -49,6 +50,7 @@ export default function Home() {
                 <TextDiv>
                     <Text>{comment}</Text>
                 </TextDiv>
+                <img src={"https://api.qrserver.com/v1/create-qr-code/?data="+String(window.location.href)+"&amp;size=100x100"} alt="" title="" width="100px"/>
                 
             </PostContainer>
         </ContentBox>

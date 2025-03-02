@@ -32,6 +32,7 @@ export default function Collection() {
     }
     catch(error){
       console.error("Error:", error);
+      return <h1>Error collecting posts</h1>
     }
   }
 

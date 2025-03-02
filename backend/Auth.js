@@ -1,8 +1,12 @@
 import { auth } from "./Firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from "firebase/auth";
 import { signOut } from "firebase/auth";
+import { useRouter } from "next/router";
+
+
   
 export async function register(email, password, setUser){
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up 
@@ -16,11 +20,15 @@ export async function register(email, password, setUser){
         const errorMessage = error.message;
         // ..
         console.log(`Error ${errorCode}:${errorMessage}`)
+        if(errorCode == "auth/email-already-in-use"){
+          alert("This email is already in use");
+        }
       });
 };
 
 
 export async function login(email,password, setUser){
+
     //const auth = auth();
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -34,7 +42,9 @@ export async function login(email,password, setUser){
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(`Error ${errorCode}:${errorMessage}`)
-        return "hello"
+        if(errorCode == "auth/invalid-credential"){
+          alert("You entered the incorrect credentials");
+        }
     });
 }
 

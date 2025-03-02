@@ -19,7 +19,20 @@ const AddPage = () => {
   const [ title, setTitle ] = useState('')
   const [ comment, setComment ] = useState('')
   const router = useRouter()
-  const addPostFunc = () => addPost(user,title,img,img_name,comment)
+
+
+  function addPostFunc(){
+    if((img != "")&&(title != "")&&(title != "")&&(comment != "")){
+      addPost(user,title,img,img_name,comment)
+    }
+    else{
+      setImg("");
+      setTitle("");
+      setComment("");
+      setImgName("");
+      alert("Not all fields filled out");
+    }
+  } 
   
 
   useEffect(() => {
@@ -27,6 +40,9 @@ const AddPage = () => {
       router.push('/');
     }
   });
+
+  
+
 
   if (user){
     return (
@@ -36,16 +52,21 @@ const AddPage = () => {
         <Section>
             <Padding>
             <Header>Add a Post</Header>
-            <InputTitle>Title</InputTitle>
-            <Input type="file"  onChange={(e) => {setImg(e.target.files[0]); setImgName(String(e.target.files[0].name));}}/>
-            <InputTitle>Title</InputTitle>
-            <Input type="title" value={title} onChange={(e) => setTitle(e.target.value)}/>
+            <InputTitle>Image</InputTitle>
+            <Input type="file" accept="image/*" onChange={(e) => {
+              if(e.target.files[0].size > 500000) {
+                alert("File is too big!");
+                e.target.value = "";
+              }else{
+              setImg(e.target.files[0]); setImgName(String(e.target.files[0].name));
+              }
+            }}/>
+            <InputTitle>{"Title (< 7 character)"}</InputTitle>
+            <Input type="title" value={title} maxlength="7" onChange={(e) => setTitle(e.target.value)}/>
             <InputTitle>Comment</InputTitle>
             <Input type="text" value={comment} onChange={(e) => setComment(e.target.value)}/>
-            <UserAgreementText>By signing in, you automatically agree to our <UserAgreementSpan href='/legal/terms-of-use' rel="noopener noreferrer" target="_blank"> Terms of Use</UserAgreementSpan> and <UserAgreementSpan href='/legal/privacy-policy' rel="noopener noreferrer" target="_blank">Privacy Policy.</UserAgreementSpan></UserAgreementText>
             </Padding>
             <GeneralButton click={addPostFunc} theme="blue" text={"Add Post"}/>
-            <p>If you already have an account, <a href="/auth/login">{img_name}</a>!</p> 
 
         </Section>
         </ContentBox>
@@ -73,39 +94,28 @@ const Padding = styled.div`
   width: 100%;
 
 > *{
-  padding: 20px;
+  padding: 30px;
 }
 `
 
 const Header = styled.h1`
-  font-size: 24px; /* Adjusted for better scalability */
+  font-size: 24px; /* Adjusted for better scalability
+  padding: 20px;
 `;
 
 const Input = styled.input`
-  font-size: 16px;
+  font-size: 2em;
   padding: 5px;
-  line-height: 20px;
+  line-height: 1em;
   box-sizing: content-box;
-  height: 20px;
-`;
-
-const InputTitle = styled.label` /* Changed to label for semantics */
-  font-size: 14px;
-`;
-
-const MainButton = styled.button`
-  font-size: 16px;
 
 `;
 
-const UserAgreementText = styled.p`
-  font-size: 12px;
+const InputTitle = styled.label`
+  font-size: 2em;
+  
 `;
 
-const UserAgreementSpan = styled(Link)` 
-  color: #007bff;
-
-`;
 
 
 export default AddPage
