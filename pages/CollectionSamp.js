@@ -1,5 +1,5 @@
 import ContentBox from "@/components/PageComponents/ContentBox"
-import { useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"
 import Footer from "@/components/PageComponents/Footer"
@@ -9,20 +9,48 @@ import { useStateContext } from "@/context/StateContext"
 import { useRouter } from "next/router"
 import GeneralButton from "@/components/GeneralButton"
 import { getUserPosts } from "@/backend/Database"
+import { doc } from "firebase/firestore"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { useParams } from "react-router";
 
 
-export default function Home() {
-
-  const { user, setUser } = useStateContext()
-  const router = useRouter()
-  const logOutUser = () => logOut(setUser)
-  const getUserPostsFunc = () => getUserPosts("rks5920@psu.edu")
+export default function Collection() {
+  const {userEmail} = useParams;
+  const { user, setUser } = useStateContext();
+  const router = useRouter();
+  const postArrayRef = useRef([]);
+  const [renderFlag, setRenderFlag] = useState(false);
 
   useEffect(() => {
       if (!user) {
         router.push('/');
       }
-    }, [user]);
+      else{
+        postArrayRef.current = [];
+        getUserPostsFunc();
+      }
+    });
+
+  async function getUserPostsFunc(){
+    try{
+      const docLst = await getUserPosts("rks5920@psu.edu");
+      handleDocReturn(docLst);
+    }
+    catch(error){
+      console.error("Error:", error);
+    }
+  }
+
+
+  function handleDocReturn(docLst){
+    console.log(docLst);
+    for (let doc=0; doc<docLst.length; doc++){
+      postArrayRef.current.push(<ThumbNail image={String(docLst[doc][2])} text={docLst[doc][1].title} dest="/PostSample"/>);
+    }
+    console.log("Post Array:",postArrayRef.current);
+    setRenderFlag(true);
+    };
+  
 
   return (
     <>
@@ -30,12 +58,7 @@ export default function Home() {
         <ContentBox>
             <Header>Welcome to (users) Collection</Header>
             <PostContainer>
-                <ThumbNail image="/Polaroid/Sample.png" text="Paris" dest="/PostSample"></ThumbNail>
-                <ThumbNail image="/Polaroid/Sample.png" text="Paris" dest="/PostSample"></ThumbNail>
-                
-                
-                <GeneralButton click={getUserPostsFunc}/>
-                
+                {postArrayRef.current}
             </PostContainer>
         </ContentBox>
         <Footer />

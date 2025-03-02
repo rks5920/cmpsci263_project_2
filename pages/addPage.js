@@ -22,13 +22,13 @@ const AddPage = () => {
   const addPostFunc = () => addPost(user,title,img,img_name,comment)
   
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     router.push('/');
-  //   }
-  // });
+  useEffect(() => {
+    if (!user) {
+      router.push('/');
+    }
+  });
 
-  if (true){
+  if (user){
     return (
         <>
         <Navbar/>

@@ -1,12 +1,8 @@
 import { database, storage } from "./Firebase";
 import { setDoc, doc, collection, addDoc, getDocs } from "firebase/firestore"; 
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export async function addPost(user,title,img,img_name,comment) {
-    //Ref to the img in the storage
-    
-
-
     //Data for the post
     const newDocData = {title: String(title), comment:String(comment), img_name:String(img_name)};
     //doc ref for the post=>User
@@ -14,7 +10,7 @@ export async function addPost(user,title,img,img_name,comment) {
     //doc ref for the subcollection of individual posts
     const postCollectionRef = collection(docRef, "IndivPosts");
     
-    // upload the img then upload the post data
+    // upload the post data then upload the img
     addDoc(postCollectionRef, newDocData)
         .then((metaData) => {
             console.log("Document written!")
@@ -23,7 +19,7 @@ export async function addPost(user,title,img,img_name,comment) {
             console.log("File Name:", img_name);
             const storageRef = ref(storage,String(user.email) + "/"+String(metaData.id) +"_"+ img_name);
             uploadBytes(storageRef, img)
-                .then((snapshot) => {
+                .then(() => {
                 console.log('Uploaded a blob or file!');
                 });
         })
@@ -39,8 +35,21 @@ export async function getUserPosts(email){
     const postCollectionRef = collection(docRef, "IndivPosts");
     // Query a reference to a subcollection
     const querySnapshot = await getDocs(postCollectionRef);
-    querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-    });
-}
+    let docLst = [];
+     for (let doc of querySnapshot.docs) {
+        // doc.data() is never undefined for query doc snapshots
+        //console.log(doc.id, " => ", doc.data().title);
+        const imageRef = ref(storage, email+"/"+String(doc.id)+"_"+doc.data().img_name);
+        try{
+            let imgURL = await getDownloadURL(imageRef);
+                console.log("Image URL:", imgURL);
+                docLst.push([doc.id, doc.data(), imgURL]);
+        }
+        catch(error){
+            console.error("Error getting image URL:", error);
+        }
+      }
+    return docLst
+    }
+
+    
