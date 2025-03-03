@@ -21,6 +21,7 @@ export default function Home() {
     if (!router.isReady){
         return;
     } 
+    console.log(router.query)
     setqrCode(window.location.href);
 
     if (userEmail && postid) {
