@@ -18,12 +18,15 @@ export default function Home() {
   const [qrCode, setqrCode] = useState("");
 
   useEffect(() => {
-    setqrCode(window.location.href);
-    if (userEmail && postid){
-      postArrayRef.current = [];
+    if (!router.isReady){
+        return;
+    } 
+    setQrCode(window.location.href);
+
+    if (userEmail && postid) {
       getUserPostFunc();
-      }
-    }, [userEmail]);
+    }
+  }, [router.isReady, userEmail, postid]);
 
   async function getUserPostFunc(){
     try{
@@ -97,7 +100,7 @@ const ImgBorder = styled.div`
 `
 
 const Image = styled.img`
-    //width: 100%;
+    width: 100%;
     max-height: 50vh;
 `
 
