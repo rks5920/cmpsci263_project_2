@@ -26,10 +26,12 @@ export default function Home() {
         setPostID(postid);
         setqrCode(window.location.href);
         getUserPostFunc();
+        
       }
     }
   
     fetchQuery(); // Call the function
+    var map = L.map('map').setView([51.505, -0.09], 13);
   }, [router.isReady, userEmail, postid]);
 
 
@@ -58,9 +60,9 @@ export default function Home() {
                 <TextDiv>
                     <Text>{comment}</Text>
                 </TextDiv>
-                {/* <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/> */}
-                <img src={`https://api.qrserver.com/v1/create-qr-code/?data=https://cmpsci283-project-1.vercel.app/&size=100x100`} alt="" title="" width="100px"/>
-                <div height="100vh"/>
+                <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/>
+                {/* <img src={`https://api.qrserver.com/v1/create-qr-code/?data=https://cmpsci283-project-1.vercel.app/&size=100x100`} alt="" title="" width="100px"/> */}
+                <div id="map" height ="100px"></div>
             </PostContainer>
         </ContentBox>
         <Footer />
