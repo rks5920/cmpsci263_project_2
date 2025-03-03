@@ -3,7 +3,7 @@ import Link  from 'next/link';
 import styled from 'styled-components';
 
 
-const NavButton = ({ text, dest, theme ,onClick}) => {
+const NavButton = ({ text, dest, theme}) => {
 
   if(theme == "blue"){
     return (

@@ -13,12 +13,14 @@ import { getUserPosts } from "@/backend/Database"
 export default function Collection() {
   
   const { user, setUser } = useStateContext();
+  const {prevDest, setPrev} = useStateContext();
   const router = useRouter();
   const {userEmail} = router.query;
   const postArrayRef = useRef([]);
   const [renderFlag, setRenderFlag] = useState(false);
 
   useEffect(() => {
+    setPrev(window.location.href);
     if (userEmail){
       postArrayRef.current = [];
       getUserPostsFunc();

@@ -8,7 +8,7 @@ import ContentBox from '@/components/PageComponents/ContentBox'
 import GeneralButton from '@/components/GeneralButton'
 import Footer from '@/components/PageComponents/Footer'
 import { addPost } from '@/backend/Database'
-import profCheck from './api/profCheck'
+import profanityCheck from './api/profanityCheck'
 
 
 
@@ -23,7 +23,7 @@ const AddPage = () => {
 
 
   async function addPostFunc(){
-    const profanityResult = (await profCheck(comment)||await profCheck(title));
+    const profanityResult = (await profanityCheck(comment)||await profanityCheck(title));
     console.log(profanityResult);
     if(profanityResult){
       setComment("");
@@ -63,7 +63,7 @@ const AddPage = () => {
             <Header>Add a Post</Header>
             <InputTitle>Image</InputTitle>
             <Input type="file" accept="image/*" onChange={(e) => {
-              if(e.target.files[0].size > 500000) {
+              if(e.target.files[0].size > 5000000) {
                 alert("File is too big!");
                 e.target.value = "";
               }else{

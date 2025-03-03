@@ -5,10 +5,13 @@ import Footer from "@/components/PageComponents/Footer"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { getUserPost } from "@/backend/Database"
+import NavButton from "@/components/Dashboard/NavButton"
+import { useStateContext } from "@/context/StateContext"
 
 
 export default function Home() {
   const router = useRouter();
+  const {prevDest, setPrev} = useStateContext()
   const [title, setTitle] = useState("no title found");
   const [imgURL, setURL] = useState("");
   const [comment, setComment] = useState("no comment found");
@@ -49,7 +52,13 @@ export default function Home() {
     <>
         <Navbar/>
         <ContentBox>
-            <Header>{title}</Header>
+            <HeaderContainer>
+                <div width={"10%"} height={"5%"}><NavButton theme={"pink"} text={"Back"} dest={prevDest}/></div>
+                <Header>{title}</Header>
+                <div><p padding="30px">Share:</p><QRCode src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/></div>
+                
+            </HeaderContainer>
+            
             <PostContainer>
                 <ImgBorder>
                     <Image src={imgURL}></Image>
@@ -57,9 +66,6 @@ export default function Home() {
                 <TextDiv>
                     <Text>{comment}</Text>
                 </TextDiv>
-                <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/>
-
-                <div id="map" height ="100px"></div>
             </PostContainer>
         </ContentBox>
         <Footer />
@@ -71,6 +77,17 @@ export default function Home() {
 const Header = styled.h1`
     padding: 20px 20px 40px 20px;
     text-align: center;
+`
+
+const HeaderContainer = styled.div`
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10%;
 `
 
 const PostContainer = styled.div`
@@ -112,6 +129,10 @@ const Image = styled.img`
 const Text = styled.p`
     padding: 10px;
     font-size: 1em;
+`
+const QRCode = styled.img`
+    display: flex;
+    padding: 10px;
 `
 
 const TextDiv = styled.div`
