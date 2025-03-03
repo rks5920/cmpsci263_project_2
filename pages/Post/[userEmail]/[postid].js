@@ -27,7 +27,7 @@ export default function Home() {
         getUserPostFunc();
     }
   
-  }, [router.isReady, userEmail, postid]);
+  }, [userEmail, postid]);
 
 
   async function getUserPostFunc(){
