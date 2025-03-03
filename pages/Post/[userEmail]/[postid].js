@@ -21,7 +21,7 @@ export default function Home() {
     if (!router.isReady){
         return;
     } 
-    setQrCode(window.location.href);
+    setqrCode(window.location.href);
 
     if (userEmail && postid) {
       getUserPostFunc();
