@@ -31,7 +31,6 @@ export default function Home() {
     }
   
     fetchQuery(); // Call the function
-    var map = L.map('map').setView([51.505, -0.09], 13);
   }, [router.isReady, userEmail, postid]);
 
 
