@@ -8,6 +8,7 @@ import ContentBox from '@/components/PageComponents/ContentBox'
 import GeneralButton from '@/components/GeneralButton'
 import Footer from '@/components/PageComponents/Footer'
 import { addPost } from '@/backend/Database'
+import profCheck from './api/profCheck'
 
 
 
@@ -21,7 +22,13 @@ const AddPage = () => {
   const router = useRouter()
 
 
-  function addPostFunc(){
+  async function addPostFunc(){
+    const profanityResult = (await profCheck(comment)||await profCheck(title));
+    console.log(profanityResult);
+    if(profanityResult){
+      setComment("");
+      alert("Profanity Detected");
+    }else{
     if((img != "")&&(title != "")&&(title != "")&&(comment != "")){
       addPost(user,title,img,img_name,comment)
     }
@@ -32,6 +39,8 @@ const AddPage = () => {
       setImgName("");
       alert("Not all fields filled out");
     }
+    }
+    
   } 
   
 
@@ -62,7 +71,7 @@ const AddPage = () => {
               }
             }}/>
             <InputTitle>{"Title (< 7 character)"}</InputTitle>
-            <Input type="title" value={title} maxlength="7" onChange={(e) => setTitle(e.target.value)}/>
+            <Input type="title" value={title} maxLength="7" onChange={(e) => setTitle(e.target.value)}/>
             <InputTitle>Comment</InputTitle>
             <Input type="text" value={comment} onChange={(e) => setComment(e.target.value)}/>
             </Padding>
