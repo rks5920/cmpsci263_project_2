@@ -9,25 +9,29 @@ import { getUserPost } from "@/backend/Database"
 
 export default function Home() {
   const router = useRouter();
-  const { userEmail, postid } = router.query;
-  const postArrayRef = useRef([]);
-  const [renderFlag, setRenderFlag] = useState(false);
   const [title, setTitle] = useState("no title found");
   const [imgURL, setURL] = useState("");
   const [comment, setComment] = useState("no comment found");
   const [qrCode, setqrCode] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [postid, setPostID] = useState("");
 
   useEffect(() => {
-    if (!router.isReady){
-        return;
-    } 
-    console.log(router.query)
-    setqrCode(window.location.href);
-
-    if (userEmail && postid) {
-      getUserPostFunc();
+    async function fetchQuery() {
+      if (!router.isReady) return; // Ensure router query is available
+      const { userEmail, postid } = router.query;
+  
+      if (userEmail && postid) {
+        setUserEmail(userEmail);
+        setPostID(postid);
+        setqrCode(window.location.href);
+        getUserPostFunc();
+      }
     }
+  
+    fetchQuery(); // Call the function
   }, [router.isReady, userEmail, postid]);
+
 
   async function getUserPostFunc(){
     try{
@@ -54,7 +58,8 @@ export default function Home() {
                 <TextDiv>
                     <Text>{comment}</Text>
                 </TextDiv>
-                <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/>
+                {/* <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/> */}
+                <img src={`https://api.qrserver.com/v1/create-qr-code/?data=https://cmpsci283-project-1.vercel.app/&size=100x100`} alt="" title="" width="100px"/>
                 <div height="100vh"/>
             </PostContainer>
         </ContentBox>
