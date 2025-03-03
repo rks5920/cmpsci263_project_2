@@ -1,3 +1,4 @@
+'use client'
 import ContentBox from "@/components/PageComponents/ContentBox"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"
@@ -18,26 +19,33 @@ export default function Home() {
   const [qrCode, setqrCode] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [postid, setPostID] = useState("");
-  console.log("start");
 
   useEffect(() => {
-    const { userEmail, postid } = router.query;
-  
+    if (!router.isReady){
+        return;
+    } 
+    const { userEmail, postid} = router.query;
+    console.log(userEmail);
+    console.log(postid);
+
     if (userEmail && postid) {
-        setUserEmail(userEmail);
-        setPostID(postid);
+      setUserEmail(userEmail);
+      setPostID(postid);
+      try {
         setqrCode(window.location.href);
-        getUserPostFunc();
+      } catch (error) {
+        console.log('Error:', error);
+      }
+      getUserPostFunc(userEmail,postid);
     }
-  
-  }, [userEmail, postid]);
+  }, [router.isReady, router.query]);
 
 
-  async function getUserPostFunc(){
+  async function getUserPostFunc(userEmail,postIDVar){
     try{
       console.log(userEmail);
       console.log(postid);
-      const docLst = await getUserPost(userEmail, postid);
+      const docLst = await getUserPost(userEmail, postIDVar);
       setTitle(docLst[0][1].title);
       setURL(docLst[0][2]);
       setComment(docLst[0][1].comment);
