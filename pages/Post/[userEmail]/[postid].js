@@ -15,27 +15,25 @@ export default function Home() {
   const [qrCode, setqrCode] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [postid, setPostID] = useState("");
+  console.log("start");
 
   useEffect(() => {
-    async function fetchQuery() {
-      if (!router.isReady) return; // Ensure router query is available
-      const { userEmail, postid } = router.query;
+    const { userEmail, postid } = router.query;
   
-      if (userEmail && postid) {
+    if (userEmail && postid) {
         setUserEmail(userEmail);
         setPostID(postid);
         setqrCode(window.location.href);
         getUserPostFunc();
-        
-      }
     }
   
-    fetchQuery(); // Call the function
   }, [router.isReady, userEmail, postid]);
 
 
   async function getUserPostFunc(){
     try{
+      console.log(userEmail);
+      console.log(postid);
       const docLst = await getUserPost(userEmail, postid);
       setTitle(docLst[0][1].title);
       setURL(docLst[0][2]);
@@ -60,7 +58,7 @@ export default function Home() {
                     <Text>{comment}</Text>
                 </TextDiv>
                 <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/>
-                {/* <img src={`https://api.qrserver.com/v1/create-qr-code/?data=https://cmpsci283-project-1.vercel.app/&size=100x100`} alt="" title="" width="100px"/> */}
+
                 <div id="map" height ="100px"></div>
             </PostContainer>
         </ContentBox>
