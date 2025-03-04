@@ -1,3 +1,4 @@
+//This page is where a user add a post
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
@@ -74,7 +75,7 @@ const AddPage = () => {
             <InputTitle>{"Title (< 7 character)"}</InputTitle>
             <Input type="title" value={title} maxLength="7" onChange={(e) => setTitle(e.target.value)}/>
             <InputTitle>Comment</InputTitle>
-            <Input type="text" value={comment} onChange={(e) => setComment(e.target.value)}/>
+            <InputComment type="text" value={comment} onChange={(e) => setComment(e.target.value)}/>
             </Padding>
             <GeneralButton click={addPostFunc} theme="blue" text={"Add Post"}/>
 
@@ -118,7 +119,14 @@ const Input = styled.input`
   padding: 5px;
   line-height: 1em;
   box-sizing: content-box;
+  rows: 3;
+`;
 
+const InputComment = styled.textarea`
+  font-size: 2em;
+  padding: 5px;
+  line-height: 1em;
+  box-sizing: content-box;
 `;
 
 const InputTitle = styled.label`

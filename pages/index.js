@@ -1,3 +1,4 @@
+//This is the main landing page with a search bar to access users
 import ContentBox from "@/components/PageComponents/ContentBox"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"

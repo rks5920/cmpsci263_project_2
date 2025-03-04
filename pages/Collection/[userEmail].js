@@ -1,3 +1,4 @@
+//This page is a collections page. It displays all the posts of a given user. The user is accessed via a dynamic url
 import ContentBox from "@/components/PageComponents/ContentBox"
 import { useEffect, useRef, useState } from "react"
 import { styled } from 'styled-components'
@@ -14,13 +15,14 @@ export default function Collection() {
   
   const { user, setUser } = useStateContext();
   const {prevDest, setPrev} = useStateContext();
+  const {currentDest, setCurrent} = useStateContext();
   const router = useRouter();
   const {userEmail} = router.query;
   const postArrayRef = useRef([]);
   const [renderFlag, setRenderFlag] = useState(false);
 
   useEffect(() => {
-    setPrev(window.location.href);
+    setCurrent(window.location.href);
     if (userEmail){
       postArrayRef.current = [];
       getUserPostsFunc();
@@ -53,7 +55,7 @@ export default function Collection() {
     <>
         <Navbar/>
         <ContentBox>
-            <Header>Welcome to {userEmail} Collection</Header>
+            <Header>Welcome to {userEmail}'s Collection</Header>
             <PostContainer>
                 {postArrayRef.current}
             </PostContainer>

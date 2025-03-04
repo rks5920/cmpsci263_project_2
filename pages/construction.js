@@ -1,3 +1,4 @@
+//This is a filler page for all of the pages that have not been developed yet but would be standard in a social media site.
 import ContentBox from "@/components/PageComponents/ContentBox"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"

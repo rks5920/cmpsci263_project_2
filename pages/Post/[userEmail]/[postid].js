@@ -1,4 +1,4 @@
-'use client'
+//This page is a template for a post. It accesses a users post from a dynamic url
 import ContentBox from "@/components/PageComponents/ContentBox"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"
@@ -13,17 +13,21 @@ import { useStateContext } from "@/context/StateContext"
 export default function Home() {
   const router = useRouter();
   const {prevDest, setPrev} = useStateContext()
+  const {currentDest, setCurrent} = useStateContext()
   const [title, setTitle] = useState("no title found");
   const [imgURL, setURL] = useState("");
   const [comment, setComment] = useState("no comment found");
-  const [qrCode, setqrCode] = useState("");
+  const {qrCode, setqrCode} = useStateContext();
   const [userEmail, setUserEmail] = useState("");
   const [postid, setPostID] = useState("");
+  
+
 
   useEffect(() => {
     if (!router.isReady){
         return;
     } 
+    
     const { userEmail, postid} = router.query;
     console.log(userEmail);
     console.log(postid);
@@ -33,12 +37,15 @@ export default function Home() {
       setPostID(postid);
       try {
         setqrCode(window.location.href);
+        setPrev(currentDest);
+        setCurrent(window.location.href);
+        
       } catch (error) {
         console.log('Error:', error);
       }
       getUserPostFunc(userEmail,postid);
     }
-  }, [router.isReady, router.query]);
+  }, [router.isReady]);
 
 
   async function getUserPostFunc(userEmail,postIDVar){
@@ -63,9 +70,7 @@ export default function Home() {
             <HeaderContainer>
                 <div width={"10%"} height={"5%"}><NavButton theme={"pink"} text={"Back"} dest={prevDest}/></div>
                 <Header>{title}</Header>
-                <div width={"10%"} height={"5%"}><NavButton theme={"blue"} text={"Share"} dest={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=500x500`}/></div>
-                {/* <div><p style={{ padding: '20px' }}>Share:</p><QRCode src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/></div> */}
-                
+                <div width={"10%"} height={"5%"}><NavButton theme={"blue"} text={"Share"} dest={"/qrcode"}/></div>                
             </HeaderContainer>
             
             <PostContainer>
