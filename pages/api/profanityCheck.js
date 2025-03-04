@@ -5,7 +5,7 @@
 // };
 
 export default async function profanityCheck(str) {
-  const url = `http://www.purgomalum.com/service/containsprofanity?text=${str}`;
+  const url = `https://www.purgomalum.com/service/containsprofanity?text=${str}`;
   const response = await fetch(url);
   const data = await response.json();
   console.log(data);
