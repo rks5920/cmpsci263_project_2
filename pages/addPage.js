@@ -31,6 +31,7 @@ const AddPage = () => {
     }else{
     if((img != "")&&(title != "")&&(title != "")&&(comment != "")){
       addPost(user,title,img,img_name,comment)
+      router.push("/");
     }
     else{
       setImg("");
@@ -46,7 +47,7 @@ const AddPage = () => {
 
   useEffect(() => {
     if (!user) {
-      router.push('/');
+      router.push('/Collection/'+String(user));
     }
   });
 

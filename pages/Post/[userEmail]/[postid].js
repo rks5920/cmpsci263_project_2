@@ -63,7 +63,8 @@ export default function Home() {
             <HeaderContainer>
                 <div width={"10%"} height={"5%"}><NavButton theme={"pink"} text={"Back"} dest={prevDest}/></div>
                 <Header>{title}</Header>
-                <div><p padding="30px">Share:</p><QRCode src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/></div>
+                <div width={"10%"} height={"5%"}><NavButton theme={"blue"} text={"Share"} dest={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=500x500`}/></div>
+                {/* <div><p style={{ padding: '20px' }}>Share:</p><QRCode src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrCode}&size=100x100`} alt="" title="" width="100px"/></div> */}
                 
             </HeaderContainer>
             
@@ -135,12 +136,14 @@ const Image = styled.img`
 `
 
 const Text = styled.p`
-    padding: 10px;
+    padding: 20px;
     font-size: 1em;
+    line-height: 1.5em;
 `
 const QRCode = styled.img`
     display: flex;
-    padding: 10px;
+    width: 10vw;
+    padding-left: 10px;
 `
 
 const TextDiv = styled.div`
