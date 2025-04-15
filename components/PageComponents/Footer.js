@@ -1,76 +1,34 @@
-import React from 'react';
+'use client';
+
 import styled from 'styled-components';
 
-const Footer = () => {
+function Footer() {
   return (
-    <FooterSection>
-      <FooterContainer>
-        <LeftContainer>
-          © {new Date().getFullYear()} CMPSC 263
-        </LeftContainer>
-        <CenterContainer>
-          <Link href="/construction">Privacy Policy</Link> | <Link href="/construction">Terms of Service</Link>
-        </CenterContainer>
-        <RightContainer>
-          <SocialIcon href="/construction" aria-label="Facebook">FB</SocialIcon>
-          <SocialIcon href="/construction" aria-label="Twitter">TW</SocialIcon>
-          <SocialIcon href="/construction" aria-label="Instagram">IG</SocialIcon>
-        </RightContainer>
-      </FooterContainer>
-    </FooterSection>
+    <FooterWrapper>
+      <Content>
+        <p>&copy; {new Date().getFullYear()} MySite. All rights reserved.</p>
+      </Content>
+    </FooterWrapper>
   );
-};
+}
 
-const FooterSection = styled.footer`
-  position: fixed;
-  bottom: 0;
-  left:0;
+// Styled Components
+const FooterWrapper = styled.footer`
+  height: 5vh;
   width: 100%;
-  height: 5vh;
-  padding: 10px;
-  background-color: #ffb6c1;
-  border-top: 4px solid #b2727b;
-
-`;
-
-const FooterContainer = styled.div`
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background: linear-gradient(to top, #4ade80, #065f46); /* reverse gradient */
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  width: 100%
-  height: 5vh;
-  background-color: transparent;
 `;
 
-const LeftContainer = styled.div`
-  height: 5vh;
-  background-color: transparent;
-`;
-
-const CenterContainer = styled.div`
+const Content = styled.div`
+  color: white;
+  font-weight: 500;
   text-align: center;
-  height: 5vh;
-  background-color: transparent;
-`;
-
-const RightContainer = styled.div`
-  height: 5vh;
-  background-color: transparent;
-`;
-
-const Link = styled.a`
-  background-color: transparent;
-`;
-
-const SocialIcon = styled.a`
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.5rem;
-  height: 5vh;
-  background-color: transparent;
-  &:hover {
-    color: #007bff;
-  }
 `;
 
 export default Footer;

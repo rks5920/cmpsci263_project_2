@@ -4,26 +4,14 @@ import { createGlobalStyle } from 'styled-components'
 
 
 export const GlobalStyle = createGlobalStyle`
-  @font-face{
-    font-family: 'dogica';
-    src: url('/fonts/dogica.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  body {
-  background-color: #f5f5f5;
-  margin: 0;
-  padding: 0;
-  background-color: #d2cbbb;
-  }
-
-  * 
-  {
-    font-family: 'dogica', sans-serif;
-    box-sizing: border-box;
+* {
     margin: 0;
-    padding: 50;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    height: 100%;
   }
 `
 

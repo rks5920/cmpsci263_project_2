@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { styled } from 'styled-components'
 import Navbar from "@/components/Dashboard/Navbar"
 import Footer from "@/components/PageComponents/Footer"
-import ThumbNail from "@/components/PageComponents/ThumbNail"
+import ThumbNail from "@/components/PageComponents/Header"
 import { useStateContext } from "@/context/StateContext"
 import { useRouter } from "next/router"
 import GeneralButton from "@/components/GeneralButton"
