@@ -1,4 +1,4 @@
-// pages/index.js
+
 
 import styled from 'styled-components';
 import LinkBox from '@/components/PageComponents/LinkBox';
@@ -18,12 +18,12 @@ export default function Home() {
           />
           <LinkBox
             href="/page2"
-            imageSrc="https://via.placeholder.com/300x200"
+            imageSrc="/sports.png"
             description="This is the second link box."
           />
           <LinkBox
             href="/page3"
-            imageSrc="https://via.placeholder.com/300x200"
+            imageSrc="\InternetPeople.png"
             description="This is the third link box."
           />
         </ContentContainer>
@@ -57,7 +57,7 @@ const MainContentWrapper = styled.main`
 const ContentContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 30px;
+  gap: 15px;
   flex-wrap: wrap;
   max-width: 1200px;  // Restrict the max width of the container
   width: 100%;
