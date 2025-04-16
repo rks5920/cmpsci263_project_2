@@ -27,11 +27,11 @@ const StyledLink = styled(Link)`
 
 const BoxContainer = styled.div`
   width: 100%;
-  max-width: 400px;  // Increased width to make the box bigger
+  max-width: 400px;  
   background-color: #2c2c2c;
-  border-radius: 15px;  // Slightly rounded corners for a more modern look
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);  // Slightly stronger shadow
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
   transition: transform 0.3s ease-in-out;
 
   &:hover {

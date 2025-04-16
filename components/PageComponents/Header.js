@@ -13,10 +13,10 @@ function Header() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <LogoWrapper>MySite</LogoWrapper>
+      <LogoWrapper>I-Witness</LogoWrapper>
 
       <TitleContainer>
-        <Title>Welcome</Title>
+        <Title>Keep the money where it matters</Title>
       </TitleContainer>
 
       <NavbarContainer>
@@ -44,7 +44,7 @@ const LogoWrapper = styled.div`
   position: absolute;
   top: 1rem;
   left: 2rem;
-  font-size: 1.5rem;
+  font-size: 3rem;
   color: white;
   font-weight: bold;
 `;
