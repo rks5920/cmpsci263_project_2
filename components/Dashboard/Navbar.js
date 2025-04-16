@@ -9,8 +9,8 @@ function Navbar() {
   return (
     <Nav>
       <StyledLink href="/">Home</StyledLink>
-      <StyledLink href="/about">About</StyledLink>
-      <StyledLink href="/contact">Contact</StyledLink>
+      <StyledLink href="/about">Make a Bet</StyledLink>
+      <StyledLink href="/contact">Pending</StyledLink>
     </Nav>
   );
 }

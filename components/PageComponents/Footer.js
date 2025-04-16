@@ -6,7 +6,7 @@ function Footer() {
   return (
     <FooterWrapper>
       <Content>
-        <p>&copy; {new Date().getFullYear()} MySite. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} I-Witness. All rights reserved.</p>
       </Content>
     </FooterWrapper>
   );

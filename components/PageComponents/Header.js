@@ -1,12 +1,34 @@
-// components/Header.jsx
-
 'use client';
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Navbar from '../Dashboard/Navbar';
+import { useEffect, useState } from 'react';
 
 function Header() {
+  const [account, setAccount] = useState(null);
+  const [isMetaMaskAvailable, setIsMetaMaskAvailable] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
+      setIsMetaMaskAvailable(true);
+    }
+  }, []);
+
+  const connectMetaMask = async () => {
+    if (!isMetaMaskAvailable) {
+      alert('MetaMask is not installed. Please install it to sign in.');
+      return;
+    }
+
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      setAccount(accounts[0]);
+    } catch (err) {
+      console.error('MetaMask connection error:', err);
+    }
+  };
+
   return (
     <MotionHeader
       initial={{ opacity: 0, y: -20 }}
@@ -14,6 +36,10 @@ function Header() {
       transition={{ duration: 0.8 }}
     >
       <LogoWrapper>I-Witness</LogoWrapper>
+
+      <SignInButton onClick={connectMetaMask}>
+        {account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Sign In'}
+      </SignInButton>
 
       <TitleContainer>
         <Title>Keep the money where it matters</Title>
@@ -47,6 +73,25 @@ const LogoWrapper = styled.div`
   font-size: 3rem;
   color: white;
   font-weight: bold;
+`;
+
+const SignInButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #064e3b;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #047857;
+  }
 `;
 
 const TitleContainer = styled.div`
