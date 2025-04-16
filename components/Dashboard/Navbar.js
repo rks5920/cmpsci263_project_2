@@ -9,7 +9,7 @@ function Navbar() {
   return (
     <Nav>
       <StyledLink href="/">Home</StyledLink>
-      <StyledLink href="/about">Make a Bet</StyledLink>
+      <StyledLink href="/wager">Wager</StyledLink>
       <StyledLink href="/contact">Pending</StyledLink>
     </Nav>
   );
