@@ -18,11 +18,13 @@ export default function InputPage() {
             <StyledInput id="opp" type="text" placeholder="Ex: 0xAbC1234Ef567890abcdEF1234567890aBCdEf123" />
 
             <StyledHeader>Wager description</StyledHeader>
-            <StyledLabel htmlFor="Wager Description"> Please provide a brief description of the wager. This is what the mediator will use to validate the winner.</StyledLabel>
+            <StyledLabel htmlFor="Wallet of opossing wager">This is the person you expect to take your bet. They must accept the wager for it to be valid.</StyledLabel>
             <StyledInput id="title" type="text" placeholder="Ex: Jack is faster than Tyler. If Jack races Tyler, Jack will win." />
 
             <StyledHeader htmlFor="betAmount">Wager Amount</StyledHeader>
+            <StyledLabel htmlFor="Wager Description"> This will be the amount wagered by each particpant. The fee for the smart contract will be removed from the winnings.</StyledLabel>
             <StyledInput id="betAmount" type="number" placeholder="$100" />
+            
             <StyledHeader>Wallet of Mediator</StyledHeader>
             <StyledLabel htmlFor="Wallet of Mediator">The mediator will be the person who validates and dictates the winner based on the wager description. Choose someone you trust!The mediator must accept the wager for it to be valid.</StyledLabel>
             <StyledInput id="med" type="text" placeholder="0xFf09eD456AaBcde7890123Ef4567890bCdEf4567"/>

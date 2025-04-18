@@ -109,7 +109,7 @@ const NavbarContainer = styled.div`
 
 const Title = styled.h1`
   color: white;
-  font-size: 1.875rem;
+  font-size: 1.8rem;
   font-weight: bold;
 `;
 

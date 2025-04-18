@@ -15,19 +15,19 @@ export default function Home() {
           </TextSection>
           <ContentContainer>
             <LinkBox
-              href="/page1"
+              href="/wager"
               imageSrc="/ThreePeople.png"
-              description="This is the first link box."
+              description="Choose a mediator and make a bet with your friends!"
             />
             <LinkBox
               href="/page2"
               imageSrc="/sports.png"
-              description="This is the second link box."
+              description="Place a bet on sporting events. No mediator needed!"
             />
             <LinkBox
               href="/page3"
               imageSrc="/InternetPeople.png"
-              description="This is the third link box."
+              description="Post your bets to other users!"
             />
           </ContentContainer>
         </MainInnerWrapper>

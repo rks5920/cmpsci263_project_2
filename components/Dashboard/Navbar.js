@@ -10,7 +10,7 @@ function Navbar() {
     <Nav>
       <StyledLink href="/">Home</StyledLink>
       <StyledLink href="/wager">Wager</StyledLink>
-      <StyledLink href="/contact">Pending</StyledLink>
+      <StyledLink href="/inbox">Inbox</StyledLink>
     </Nav>
   );
 }
