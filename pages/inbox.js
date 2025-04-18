@@ -123,6 +123,7 @@ const Preview = styled.span`
 `;
 
 const ViewButton = styled.button`
+  text-decoration: none;
   padding: 10px 16px;
   background-color: #4ade80;
   color: #121212;

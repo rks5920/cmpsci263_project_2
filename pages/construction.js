@@ -1,35 +1,24 @@
+'use client';
+
 import styled from 'styled-components';
-import LinkBox from '@/components/PageComponents/LinkBox';
 import Header from '@/components/PageComponents/Header';
 import Footer from '@/components/PageComponents/Footer';
 
-export default function Home() {
+export default function GifDisplayPage() {
   return (
     <PageContainer>
       <Header />
       <MainContentWrapper>
         <MainInnerWrapper>
           <TextSection>
-            <h1>Make your own odds with I-Witness</h1>
-            <p>Traditional sports betting website take up to 10% of your bets. With our decentralized and transparent structure, earn more and know where your money goes!</p>
+            <h1>This page is under construction</h1>
           </TextSection>
-          <ContentContainer>
-            <LinkBox
-              href="/wager"
-              imageSrc="/ThreePeople.png"
-              description="Choose a mediator and make a bet with your friends!"
+          <GifContainer>
+            <StyledGif
+              src="https://i.gifer.com/ZSj2.gif"
+              alt="Construction"
             />
-            <LinkBox
-              href="/construction"
-              imageSrc="/sports.png"
-              description="Place a bet on sporting events. No mediator needed!"
-            />
-            <LinkBox
-              href="/construction"
-              imageSrc="/InternetPeople.png"
-              description="Post your bets to other users!"
-            />
-          </ContentContainer>
+          </GifContainer>
         </MainInnerWrapper>
       </MainContentWrapper>
       <Footer />
@@ -37,6 +26,7 @@ export default function Home() {
   );
 }
 
+// Styled Components
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,7 +47,7 @@ const MainContentWrapper = styled.main`
 `;
 
 const MainInnerWrapper = styled.div`
-  max-width: 1000px;
+  max-width: 800px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -66,7 +56,7 @@ const MainInnerWrapper = styled.div`
 
 const TextSection = styled.div`
   text-align: center;
-  margin: 60px;
+  margin: 10px;
 
   h1 {
     font-size: 1.5rem;
@@ -79,10 +69,17 @@ const TextSection = styled.div`
   }
 `;
 
-const ContentContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  flex-wrap: wrap;
+const GifContainer = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledGif = styled.img`
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 `;

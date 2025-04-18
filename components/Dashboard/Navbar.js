@@ -25,14 +25,21 @@ const Nav = styled.nav`
 
 const StyledLink = styled(Link)`
   color: white;
-  font-weight: 600;  // Increased font weight for a bolder look
-  font-size: 1.8rem;  // Increased font size for the navbar items
+  font-weight: 600;
+  font-size: 1.4rem;
   text-decoration: none;
-  transition: color 0.3s;
+  background-color: #065f46;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 
   &:hover {
-    color: #bbf7d0;  // Highlight on hover
+    background-color: #047857;
+    color: #bbf7d0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
   }
 `;
+
 
 export default Navbar;

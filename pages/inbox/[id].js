@@ -40,7 +40,7 @@ export default function WagerDetailPage() {
           <HeaderRow>
             <StyledHeader>Participant 1</StyledHeader>
             <StatusIndicator $status={wager.participant1_status}>
-              {wager.participant1_status ? 'Agreed' : 'Pending'}
+              {wager.participant1_status ? 'Accepted' : 'Pending'}
             </StatusIndicator>
           </HeaderRow>
           <StyledLabel>{wager.participant1}</StyledLabel>
@@ -48,7 +48,7 @@ export default function WagerDetailPage() {
           <HeaderRow>
             <StyledHeader>Participant 2</StyledHeader>
             <StatusIndicator $status={wager.participant2_status}>
-              {wager.participant2_status ? 'Agreed' : 'Pending'}
+              {wager.participant2_status ? 'Accepted' : 'Pending'}
             </StatusIndicator>
           </HeaderRow>
           <StyledLabel>{wager.participant2}</StyledLabel>
@@ -56,7 +56,7 @@ export default function WagerDetailPage() {
           <HeaderRow>
             <StyledHeader>Mediator</StyledHeader>
             <StatusIndicator $status={wager.mediator_status}>
-              {wager.mediator_status ? 'Agreed' : 'Pending'}
+              {wager.mediator_status ? 'Accepted' : 'Pending'}
             </StatusIndicator>
           </HeaderRow>
           <StyledLabel>{wager.mediator}</StyledLabel>
@@ -130,14 +130,14 @@ const ErrorText = styled.p`
 `;
 
 const StyledLabel = styled.label`
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: #bbbbbb;
 `;
 
 const StyledHeader = styled.label`
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   font-weight: bold;
-  color: #bbbbbb;
+  color: #ffffff;
 `;
 
 const StatusIndicator = styled.div`
@@ -145,7 +145,7 @@ const StatusIndicator = styled.div`
   align-self: flex-start;
   padding: 4px 10px;
   border-radius: 9999px; /* extra round pill shape */
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   background-color: ${(props) => (props.$status ? '#4ade80' : '#facc15')};
   color: ${(props) => (props.$status ? '#065f46' : '#92400e')};

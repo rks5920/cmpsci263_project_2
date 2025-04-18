@@ -42,7 +42,7 @@ function Header() {
       </SignInButton>
 
       <TitleContainer>
-        <Title>Keep the money where it matters</Title>
+        <Title className="title">Keep the money where it matters</Title>
       </TitleContainer>
 
       <NavbarContainer>
@@ -73,6 +73,7 @@ const LogoWrapper = styled.div`
   font-size: 3rem;
   color: white;
   font-weight: bold;
+  z-index: 2;
 `;
 
 const SignInButton = styled.button`
@@ -91,6 +92,9 @@ const SignInButton = styled.button`
 
   &:hover {
     background-color: #047857;
+    color: #bbf7d0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
   }
 `;
 
@@ -99,6 +103,7 @@ const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 4rem; /* Creates space between the top and title */
 `;
 
 const NavbarContainer = styled.div`
@@ -111,6 +116,14 @@ const Title = styled.h1`
   color: white;
   font-size: 1.8rem;
   font-weight: bold;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  
+  /* Hide the title when the logo is present */
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export default Header;
