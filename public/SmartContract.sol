@@ -28,18 +28,19 @@ contract MediatedWager{
     }
 
     function initWager( address User2, address Mediator, uint256 BetSize) public payable {
+        
+        require(msg.value == BetSize, "Incorrect ammount sent to initiate");
         uint id = wagerCount;
         wagerCount++;
         Wagers[id] = Wager({id: id, User1: msg.sender, User2: User2, Mediator: Mediator, User2Consent: false, MediatorConsent: false, BetSize: BetSize, Winner:0x0000000000000000000000000000000000000000, Complete: false});
-        require(msg.value == BetSize);
         Contracts[msg.sender].push(id);
         Contracts[User2].push(id);
         Contracts[Mediator].push(id);
     }
 
     function acceptWager_User2(uint id) public payable {
-        require(msg.sender == Wagers[id].User2);
-        require(msg.value == Wagers[id].BetSize);
+        require(msg.sender == Wagers[id].User2, "You are not the designated User2");
+        require(msg.value == Wagers[id].BetSize, "You did not sent the correct ammount");
         Wagers[id].User2Consent = true;
     }
         
@@ -50,9 +51,9 @@ contract MediatedWager{
     }
 
     function settleWager(uint id, address winner) public {
-        require(Wagers[id].User2Consent == true);
-        require(Wagers[id].MediatorConsent == true);
-        require(Wagers[id].Winner == 0x0000000000000000000000000000000000000000);
+        require(Wagers[id].User2Consent == true, "User 2 has not accepted yet");
+        require(Wagers[id].MediatorConsent == true, "Mediator has not accepted yet");
+        require(Wagers[id].Winner == 0x0000000000000000000000000000000000000000, "A winner has already been decided");
         require((winner == Wagers[id].User1)||(winner == Wagers[id].User2));
         Wagers[id].Winner = winner;
 
