@@ -27,25 +27,37 @@ export default function InputPage() {
     setError('');
   
     try {
-      const usdToBnbRate = 600; // Static rate: $600 = 1 BNB
+      // Convert USD to BNB (static rate for now)
+      const usdToBnbRate = 600; // $600 = 1 BNB
       const usdAmount = parseFloat(betAmount);
       const bnbAmount = usdAmount / usdToBnbRate;
-      console.log('ethers:', ethers);
-      console.log('ethers.utils:', ethers.utils);
-      console.log('bnbAmount:', bnbAmount);
-      const betValueWei = parseEther(bnbAmount.toFixed(18));
-
-      const chainId = await ethereum.request({ method: 'eth_chainId' });
-      console.log("Current network chainId:", chainId);
-      
-      const provider = new JsonRpcProvider('https://data-seed-prebsc-1-s1.binance.org:8545/');
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      const selectedAccount = accounts[0]; // Ensure it's the right account
-      const signer = provider.getSigner(account);  // This is the signer connected to MetaMask
-    
-      // Instantiate contract with the signer (this allows sending transactions)
-      const contract = new Contract(contractAddress, contractABI[0], signer);
+      const betValueWei = ethers.parseEther(bnbAmount.toFixed(18));
   
+      // Connect to MetaMask
+      if (!window.ethereum) {
+        alert('MetaMask not detected');
+        return;
+      }
+  
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+  
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const userAddress = await signer.getAddress();
+      console.log('Connected MetaMask address:', userAddress);
+  
+      const network = await provider.getNetwork();
+      console.log('Current chain ID:', network.chainId);
+  
+      if (network.chainId !== 97) {
+        alert('Please switch to the Binance Smart Chain Testnet (chainId 97)');
+        return;
+      }
+  
+      // Instantiate contract with signer
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  
+      // Call the smart contract function
       const tx = await contract.initWager(
         opp,
         med,
@@ -54,11 +66,13 @@ export default function InputPage() {
         { value: betValueWei }
       );
   
+      console.log('Transaction submitted:', tx.hash);
       await tx.wait();
+  
       alert('Wager created successfully!');
     } catch (err) {
       console.error('Smart contract call failed:', err);
-      setError('Smart contract call failed. See console for details.');
+      setError('Smart contract call failed. Check console for details.');
     }
   };
   
