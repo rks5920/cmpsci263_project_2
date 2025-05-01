@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import Header from '@/components/PageComponents/Header';
 import Footer from '@/components/PageComponents/Footer';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useStateContext } from '@/context/StateContext';
+import { ethers } from "ethers";
+import { JsonRpcProvider, parseEther, Contract,BrowserProvider } from 'ethers';
 
 export default function InboxPage() {
     const wagers = [
@@ -9,6 +13,30 @@ export default function InboxPage() {
         { id: '2', amount: '$5', description: 'Justin will break up with Karen by Friday.', participant1: '0xAbC1234567890abcdef1234567890ABCDEF12345', participant1_status: true, participant2: '0xDeF4567890abcdefABC1234567890ABCDEF67890', participant2_status: true, mediator: '0x7890ABCDEF1234567890abcdef1234567890ABCD', mediator_status: true  },
         { id: '3', amount: '$25', description: 'Can you help mediate this bet?', participant1: '0xDeF4567890abcdefABC1234567890ABCDEF67890', participant1_status: true, participant2: '0xAbC1234567890abcdef1234567890ABCDEF12345', participant2_status: true, mediator: '0x7890ABCDEF1234567890abcdef1234567890ABCD', mediator_status: false  },
       ];
+
+      const fetchWagers = async () => {
+        try {
+          if (!window.ethereum) {
+            console.log("error");
+            return;
+          }
+  
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await provider.getSigner();
+          const address = await signer.getAddress();
+  
+          const contract = new ethers.Contract(contractAddress, contractABI, provider);
+  
+          const ids = await contract.get_Wagers(address);
+          console.log(ids);
+          setWagerIds(ids.map(id => id.toString()));
+        } catch (err) {
+          console.error('Failed to fetch wagers:', err);
+        }}
+
+      useEffect(() => {
+        fetchWagers();
+        });
 
   return (
     <PageContainer>
