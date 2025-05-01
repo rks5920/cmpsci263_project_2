@@ -1,8 +1,69 @@
 import styled from 'styled-components';
 import Header from '@/components/PageComponents/Header';
 import Footer from '@/components/PageComponents/Footer';
+import { useState } from 'react';
+import { useStateContext } from '@/context/StateContext';
+import { ethers } from "ethers";
+import { JsonRpcProvider, parseEther, Contract } from 'ethers';
+
 
 export default function InputPage() {
+  const [opp, setOpp] = useState('');
+  const [title, setTitle] = useState('');
+  const [betAmount, setBetAmount] = useState('');
+  const [med, setMed] = useState('');
+  const [error, setError] = useState('');
+
+  const { account, contractABI, contractAddress } = useStateContext(); // Access context
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!opp || !title || !betAmount || !med) {
+      setError('Please fill in all fields.');
+      return;
+    }
+  
+    setError('');
+  
+    try {
+      const usdToBnbRate = 600; // Static rate: $600 = 1 BNB
+      const usdAmount = parseFloat(betAmount);
+      const bnbAmount = usdAmount / usdToBnbRate;
+      console.log('ethers:', ethers);
+      console.log('ethers.utils:', ethers.utils);
+      console.log('bnbAmount:', bnbAmount);
+      const betValueWei = parseEther(bnbAmount.toFixed(18));
+
+      const chainId = await ethereum.request({ method: 'eth_chainId' });
+      console.log("Current network chainId:", chainId);
+      
+      const provider = new JsonRpcProvider('https://data-seed-prebsc-1-s1.binance.org:8545/');
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      const selectedAccount = accounts[0]; // Ensure it's the right account
+      const signer = provider.getSigner(account);  // This is the signer connected to MetaMask
+    
+      // Instantiate contract with the signer (this allows sending transactions)
+      const contract = new Contract(contractAddress, contractABI[0], signer);
+  
+      const tx = await contract.initWager(
+        opp,
+        med,
+        title,
+        betValueWei,
+        { value: betValueWei }
+      );
+  
+      await tx.wait();
+      alert('Wager created successfully!');
+    } catch (err) {
+      console.error('Smart contract call failed:', err);
+      setError('Smart contract call failed. See console for details.');
+    }
+  };
+  
+  
+
   return (
     <PageContainer>
       <Header />
@@ -12,24 +73,50 @@ export default function InputPage() {
             <h1>Enter Your Details for a Mediated Bet</h1>
             <p>Mediated Bets allow for you to place a bet on practically anything with another user. A mediator is used to confirm the winner and assign the prize.</p>
           </TextSection>
-          <FormContainer>
-            <StyledHeader>Wallet of opossing wager</StyledHeader>
-            <StyledLabel htmlFor="Wallet of opossing wager">This is the person you expect to take your bet. They must accept the wager for it to be valid.</StyledLabel>
-            <StyledInput id="opp" type="text" placeholder="Ex: 0xAbC1234Ef567890abcdEF1234567890aBCdEf123" />
+          <FormContainer onSubmit={handleSubmit}>
+            <StyledHeader>Wallet of Opposing Wager</StyledHeader>
+            <StyledLabel htmlFor="Wallet of Opposing Wager">This is the person you expect to take your bet. They must accept the wager for it to be valid.</StyledLabel>
+            <StyledInput
+              id="opp"
+              type="text"
+              value={opp}
+              onChange={(e) => setOpp(e.target.value)}
+              placeholder="Ex: 0xAbC1234Ef567890abcdEF1234567890aBCdEf123"
+            />
 
-            <StyledHeader>Wager description</StyledHeader>
-            <StyledLabel htmlFor="Wallet of opossing wager">This is the person you expect to take your bet. They must accept the wager for it to be valid.</StyledLabel>
-            <StyledInput id="title" type="text" placeholder="Ex: Jack is faster than Tyler. If Jack races Tyler, Jack will win." />
+            <StyledHeader>Wager Description</StyledHeader>
+            <StyledLabel htmlFor="title">This is the person you expect to take your bet. They must accept the wager for it to be valid.</StyledLabel>
+            <StyledInput
+              id="title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Ex: Jack is faster than Tyler. If Jack races Tyler, Jack will win."
+            />
 
             <StyledHeader htmlFor="betAmount">Wager Amount</StyledHeader>
-            <StyledLabel htmlFor="Wager Description"> This will be the amount wagered by each particpant. The fee for the smart contract will be removed from the winnings.</StyledLabel>
-            <StyledInput id="betAmount" type="number" placeholder="$100" />
-            
-            <StyledHeader>Wallet of Mediator</StyledHeader>
-            <StyledLabel htmlFor="Wallet of Mediator">The mediator will be the person who validates and dictates the winner based on the wager description. Choose someone you trust!The mediator must accept the wager for it to be valid.</StyledLabel>
-            <StyledInput id="med" type="text" placeholder="0xFf09eD456AaBcde7890123Ef4567890bCdEf4567"/>
+            <StyledLabel htmlFor="betAmount">This will be the amount wagered by each participant. The fee for the smart contract will be removed from the winnings.</StyledLabel>
+            <StyledInput
+              id="betAmount"
+              type="number"
+              value={betAmount}
+              onChange={(e) => setBetAmount(e.target.value)}
+              placeholder="$100"
+            />
 
-            <StyledButton>Submit</StyledButton>
+            <StyledHeader>Wallet of Mediator</StyledHeader>
+            <StyledLabel htmlFor="med">The mediator will be the person who validates and dictates the winner based on the wager description. Choose someone you trust! The mediator must accept the wager for it to be valid.</StyledLabel>
+            <StyledInput
+              id="med"
+              type="text"
+              value={med}
+              onChange={(e) => setMed(e.target.value)}
+              placeholder="0xFf09eD456AaBcde7890123Ef4567890bCdEf4567"
+            />
+
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            
+            <StyledButton type="submit">Submit</StyledButton>
           </FormContainer>
         </MainInnerWrapper>
       </MainContentWrapper>
@@ -39,7 +126,6 @@ export default function InputPage() {
 }
 
 // Styled Components
-
 
 const PageContainer = styled.div`
   display: flex;
@@ -83,7 +169,7 @@ const TextSection = styled.div`
   }
 `;
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -129,3 +215,10 @@ const StyledButton = styled.button`
     background-color: #047857;
   }
 `;
+
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 1rem;
+  text-align: center;
+`;
+

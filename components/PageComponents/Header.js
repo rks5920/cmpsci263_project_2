@@ -4,30 +4,11 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Navbar from '../Dashboard/Navbar';
 import { useEffect, useState } from 'react';
+import { useStateContext } from '@/context/StateContext.js';
 
 function Header() {
-  const [account, setAccount] = useState(null);
-  const [isMetaMaskAvailable, setIsMetaMaskAvailable] = useState(false);
+  const { account, connectMetaMask } = useStateContext();
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
-      setIsMetaMaskAvailable(true);
-    }
-  }, []);
-
-  const connectMetaMask = async () => {
-    if (!isMetaMaskAvailable) {
-      alert('MetaMask is not installed. Please install it to sign in.');
-      return;
-    }
-
-    try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      setAccount(accounts[0]);
-    } catch (err) {
-      console.error('MetaMask connection error:', err);
-    }
-  };
 
   return (
     <MotionHeader

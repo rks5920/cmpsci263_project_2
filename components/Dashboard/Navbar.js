@@ -1,29 +1,57 @@
-// components/Navbar.jsx
-
 'use client';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useStateContext } from '@/context/StateContext.js';
 
 function Navbar() {
+  const [isConnected, setIsConnected] = useState(false);
+  const router = useRouter();
+
+  // Check MetaMask connection
+  useEffect(() => {
+    const checkConnection = async () => {
+      if (typeof window.ethereum !== 'undefined') {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        setIsConnected(accounts.length > 0);
+      }
+    };
+    checkConnection();
+  }, []);
+
+  const handleProtectedClick = (e, route) => {
+    e.preventDefault();
+    if (isConnected) {
+      router.push(route);
+    } else {
+      alert('Please connect your MetaMask wallet to access this page.');
+    }
+  };
+
   return (
     <Nav>
       <StyledLink href="/">Home</StyledLink>
-      <StyledLink href="/wager">Wager</StyledLink>
-      <StyledLink href="/inbox">Inbox</StyledLink>
+      <FakeLink as="button" onClick={(e) => handleProtectedClick(e, '/wager')}>
+        Wager
+      </FakeLink>
+      <FakeLink as="button" onClick={(e) => handleProtectedClick(e, '/inbox')}>
+        Inbox
+      </FakeLink>
     </Nav>
   );
 }
 
 const Nav = styled.nav`
   display: flex;
-  gap: 3rem;  // Increased gap for more space between links
-  align-items: center;  // Vertically center the items within the navbar
-  padding: 20px 40px;  // Increased padding for a bigger navbar
-  height: 80px;  // Set a fixed height for the navbar
+  gap: 3rem;
+  align-items: center;
+  padding: 20px 40px;
+  height: 80px;
 `;
 
-const StyledLink = styled(Link)`
+const linkStyles = css`
   color: white;
   font-weight: 600;
   font-size: 1.4rem;
@@ -32,6 +60,8 @@ const StyledLink = styled(Link)`
   padding: 10px 20px;
   border-radius: 8px;
   transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
 
   &:hover {
     background-color: #047857;
@@ -41,5 +71,12 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledLink = styled(Link)`
+  ${linkStyles}
+`;
+
+const FakeLink = styled.button`
+  ${linkStyles}
+`;
 
 export default Navbar;
