@@ -5,9 +5,18 @@ import { motion } from 'framer-motion';
 import Navbar from '../Dashboard/Navbar';
 import { useEffect, useState } from 'react';
 import { useStateContext } from '@/context/StateContext.js';
+import { useRouter, usePathname } from 'next/navigation';
 
 function Header() {
   const { account, connectMetaMask } = useStateContext();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!account && ((pathname !== '/') && (pathname !== '/construction'))) {
+      router.push('/');
+    }
+  }, [account, pathname]);
 
 
   return (

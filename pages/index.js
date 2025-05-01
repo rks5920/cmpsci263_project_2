@@ -1,9 +1,26 @@
 import styled from 'styled-components';
 import LinkBox from '@/components/PageComponents/LinkBox';
+import LinkBoxSignIn from '@/components/PageComponents/LinkBoxSignIn';
 import Header from '@/components/PageComponents/Header';
 import Footer from '@/components/PageComponents/Footer';
+import { useRouter } from 'next/navigation';
+import { useStateContext } from '@/context/StateContext';
 
 export default function Home() {
+
+  const router = useRouter();
+  const { account: isConnected } = useStateContext();
+  
+  const handleProtectedClick = (e, route) => {
+    e.preventDefault();
+    if (isConnected) {
+      router.push(route);
+    } else {
+      alert('Please connect your MetaMask wallet to access this page.');
+    }
+  };
+
+
   return (
     <PageContainer>
       <Header />
@@ -14,10 +31,11 @@ export default function Home() {
             <p>Traditional sports betting website take up to 10% of your bets. With our decentralized and transparent structure, earn more and know where your money goes!</p>
           </TextSection>
           <ContentContainer>
-            <LinkBox
+            <LinkBoxSignIn
               href="/wager"
               imageSrc="/ThreePeople.png"
               description="Choose a mediator and make a bet with your friends!"
+              onClick={(e) => handleProtectedClick(e, '/wager')}
             />
             <LinkBox
               href="/construction"
