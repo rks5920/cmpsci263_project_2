@@ -16,7 +16,6 @@ export const StateContext = ({ children }) => {
 
   const contractABI = [
     
-    [
       {
         "inputs": [
           {
@@ -337,7 +336,7 @@ export const StateContext = ({ children }) => {
         "stateMutability": "view",
         "type": "function"
       }
-    ]
+    
     
   ];
   

@@ -4,7 +4,7 @@ import Footer from '@/components/PageComponents/Footer';
 import { useState } from 'react';
 import { useStateContext } from '@/context/StateContext';
 import { ethers } from "ethers";
-import { JsonRpcProvider, parseEther, Contract } from 'ethers';
+import { JsonRpcProvider, parseEther, Contract,BrowserProvider } from 'ethers';
 
 
 export default function InputPage() {
@@ -41,15 +41,15 @@ export default function InputPage() {
   
       await window.ethereum.request({ method: 'eth_requestAccounts' });
   
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
+      const provider = new BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
       const userAddress = await signer.getAddress();
       console.log('Connected MetaMask address:', userAddress);
   
       const network = await provider.getNetwork();
       console.log('Current chain ID:', network.chainId);
   
-      if (network.chainId !== 97) {
+      if (network.chainId !== 97n) {
         alert('Please switch to the Binance Smart Chain Testnet (chainId 97)');
         return;
       }
