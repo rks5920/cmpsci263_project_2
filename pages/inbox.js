@@ -2,41 +2,78 @@ import styled from 'styled-components';
 import Header from '@/components/PageComponents/Header';
 import Footer from '@/components/PageComponents/Footer';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useStateContext } from '@/context/StateContext';
 import { ethers } from "ethers";
 import { JsonRpcProvider, parseEther, Contract,BrowserProvider } from 'ethers';
 
 export default function InboxPage() {
-    const wagers = [
-        { id: '1', amount: '$100', description: 'PennState is gonna win the Championship.', participant1: '0xAbC1234567890abcdef1234567890ABCDEF12345', participant1_status: true, participant2: '0xDeF4567890abcdefABC1234567890ABCDEF67890', participant2_status: false, mediator: '0x7890ABCDEF1234567890abcdef1234567890ABCD', mediator_status: false },
-        { id: '2', amount: '$5', description: 'Justin will break up with Karen by Friday.', participant1: '0xAbC1234567890abcdef1234567890ABCDEF12345', participant1_status: true, participant2: '0xDeF4567890abcdefABC1234567890ABCDEF67890', participant2_status: true, mediator: '0x7890ABCDEF1234567890abcdef1234567890ABCD', mediator_status: true  },
-        { id: '3', amount: '$25', description: 'Can you help mediate this bet?', participant1: '0xDeF4567890abcdefABC1234567890ABCDEF67890', participant1_status: true, participant2: '0xAbC1234567890abcdef1234567890ABCDEF12345', participant2_status: true, mediator: '0x7890ABCDEF1234567890abcdef1234567890ABCD', mediator_status: false  },
-      ];
+      const [wagers, setWagers] = useState([]);
+      const fetchedWagers = [];
 
-      const fetchWagers = async () => {
+      const [error, setError] = useState('');
+    
+      const { account, contractABI, contractAddress } = useStateContext();
+
+      const handleFetchWagers = async () => {
+
+        setError('');
+      
         try {
+          // Connect to MetaMask
           if (!window.ethereum) {
-            console.log("error");
+            alert('MetaMask not detected');
             return;
           }
-  
-          const provider = new ethers.BrowserProvider(window.ethereum);
+      
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+      
+          const provider = new BrowserProvider(window.ethereum);
           const signer = await provider.getSigner();
-          const address = await signer.getAddress();
-  
-          const contract = new ethers.Contract(contractAddress, contractABI, provider);
-  
-          const ids = await contract.get_Wagers(address);
-          console.log(ids);
-          setWagerIds(ids.map(id => id.toString()));
+          const userAddress = await signer.getAddress();
+          console.log('Connected MetaMask address:', userAddress);
+      
+          const network = await provider.getNetwork();
+          console.log('Current chain ID:', network.chainId);
+      
+          if (network.chainId !== 97n) {
+            alert('Please switch to the Binance Smart Chain Testnet (chainId 97)');
+            return;
+          }
+      
+          // Instantiate contract with signer
+          const contract = new ethers.Contract(contractAddress, contractABI, signer);
+      
+          const userWagerIds = await contract.get_Wagers(account);
+          for(let id in userWagerIds){
+            console.log("Wager ID", userWagerIds[id].toString());
+            const userWagers = await contract.get_Wager_Status(userWagerIds[id].toString());
+            const parsedWager = {
+              id: userWagers[0].toString(),
+              participant1: userWagers[1],
+              participant2: userWagers[2],
+              mediator: userWagers[3],
+              winner: userWagers[4],
+              description: userWagers[5],
+              participant2_status: userWagers[6],
+              mediator_status: userWagers[7],
+              amount: ethers.formatEther(userWagers[8]),
+              wager_status: userWagers[9]
+            };
+            fetchedWagers.push(parsedWager);
+            console.log("Wager info:", parsedWager);
+          };
+          setWagers(fetchedWagers);
+      
         } catch (err) {
-          console.error('Failed to fetch wagers:', err);
-        }}
+          console.error('Smart contract call failed:', err);
+          setError('Smart contract call failed. Check console for details.');
+        }
+      };
 
       useEffect(() => {
-        fetchWagers();
-        });
+        handleFetchWagers();
+      }, []);
 
   return (
     <PageContainer>
