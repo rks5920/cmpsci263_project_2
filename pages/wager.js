@@ -109,7 +109,7 @@ export default function InputPage() {
             />
 
             <StyledHeader htmlFor="betAmount">Wager Amount</StyledHeader>
-            <StyledLabel htmlFor="betAmount">This will be the amount wagered by each participant. The fee for the smart contract will be removed from the winnings.</StyledLabel>
+            <StyledLabel htmlFor="betAmount">This will be the amount wagered by each participant in USD. The value will be converted into BNB with a fixed value of 600 USD:1 BNB</StyledLabel>
             <StyledInput
               id="betAmount"
               type="number"

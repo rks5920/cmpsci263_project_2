@@ -368,6 +368,7 @@ export const StateContext = ({ children }) => {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       setAccount(accounts[0]);
       console.log("Connected account:", accounts[0]);
+      window.location.reload();
     } catch (err) {
       console.error("MetaMask connection error:", err);
     }

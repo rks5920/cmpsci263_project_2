@@ -57,7 +57,7 @@ export default function InboxPage() {
               description: userWagers[5],
               participant2_status: userWagers[6],
               mediator_status: userWagers[7],
-              amount: ethers.formatEther(userWagers[8])*3*600,
+              amount: ethers.formatEther(userWagers[8])*600,
               wager_status: userWagers[9]
             };
             if (parsedWager.wager_status == false){
@@ -91,7 +91,7 @@ export default function InboxPage() {
               <MessageRow key={wgr.id}>
                 <MessageInfo>
                   <Sender>{wgr.participant1.slice(0, 6)}...{wgr.participant1.slice(-4)}</Sender>
-                  <Subject>{wgr.amount}</Subject>
+                  <Subject>${wgr.amount}</Subject>
                   <Preview>{wgr.description.slice(0,40)}</Preview>
                 </MessageInfo>
                 <Link href={`/inbox/${wgr.id}`} passHref legacyBehavior>

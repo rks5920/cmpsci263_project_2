@@ -91,7 +91,7 @@ export default function InboxPage() {
               <MessageRow key={wgr.id}>
                 <MessageInfo>
                   <Sender>{wgr.participant1.slice(0, 6)}...{wgr.participant1.slice(-4)}</Sender>
-                  <Subject>{wgr.amount}</Subject>
+                  <Subject>${wgr.amount*600}</Subject>
                   <Preview>{wgr.description.slice(0,40)}</Preview>
                 </MessageInfo>
                 <Link href={`/inbox/${wgr.id}`} passHref legacyBehavior>
