@@ -1,18 +1,188 @@
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 import Header from '@/components/PageComponents/Header';
 import Footer from '@/components/PageComponents/Footer';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useStateContext } from '@/context/StateContext';
+import { ethers } from "ethers";
+import { JsonRpcProvider, parseEther, Contract,BrowserProvider } from 'ethers';
+import { useRouter } from 'next/router';
 
-// Dummy messages (replace with real data source or API later)
-const wagers = [
-  { id: '1', amount: '$100', description: 'PennState is gonna win the Championship.', participant1: '0xAbC1234567890abcdef1234567890ABCDEF12345', participant1_status: true, participant2: '0xDeF4567890abcdefABC1234567890ABCDEF67890', participant2_status: false, mediator: '0x7890ABCDEF1234567890abcdef1234567890ABCD', mediator_status: false },
-  { id: '2', amount: '$5', description: 'Justin will break up with Karen by Friday.', participant1: '0xAbC1234567890abcdef1234567890ABCDEF12345', participant1_status: true, participant2: '0xDeF4567890abcdefABC1234567890ABCDEF67890', participant2_status: true, mediator: '0x7890ABCDEF1234567890abcdef1234567890ABCD', mediator_status: true  },
-  { id: '3', amount: '25', description: 'Can you help mediate this bet?', participant1: '0xDeF4567890abcdefABC1234567890ABCDEF67890', participant1_status: true, participant2: '0xAbC1234567890abcdef1234567890ABCDEF12345', participant2_status: true, mediator: '0x7890ABCDEF1234567890abcdef1234567890ABCD', mediator_status: false  },
-];
 
 export default function WagerDetailPage() {
+  
   const router = useRouter();
   const { id } = router.query;
+  const [wagers, setWagers] = useState([]);
+  const fetchedWagers = [];
+
+  const [error, setError] = useState('');
+
+  const { account, contractABI, contractAddress } = useStateContext();
+
+  const handleFetchWagers = async () => {
+
+    setError('');
+
+    try {
+      // Connect to MetaMask
+      if (!window.ethereum) {
+        alert('MetaMask not detected');
+        return;
+      }
+
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+      const provider = new BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const userAddress = await signer.getAddress();
+      console.log('Connected MetaMask address:', userAddress);
+
+      const network = await provider.getNetwork();
+      console.log('Current chain ID:', network.chainId);
+
+      if (network.chainId !== 97n) {
+        alert('Please switch to the Binance Smart Chain Testnet (chainId 97)');
+        return;
+      }
+
+      // Instantiate contract with signer
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+      const userWagerIds = await contract.get_Wagers(account);
+      for(let id in userWagerIds){
+        console.log("Wager ID", userWagerIds[id].toString());
+        const userWagers = await contract.get_Wager_Status(userWagerIds[id].toString());
+        const parsedWager = {
+          id: userWagers[0].toString(),
+          participant1: userWagers[1].toLowerCase(),
+          participant2: userWagers[2].toLowerCase(),
+          mediator: userWagers[3].toLowerCase(),
+          winner: userWagers[4].toLowerCase(),
+          description: userWagers[5],
+          participant2_status: userWagers[6],
+          mediator_status: userWagers[7],
+          amount: ethers.formatEther(userWagers[8])*3*600,
+          wager_status: userWagers[9]
+        };
+
+        fetchedWagers.push(parsedWager);
+        console.log("Wager info:", parsedWager);
+      };
+      setWagers(fetchedWagers);
+
+    } catch (err) {
+      console.error('Smart contract call failed:', err);
+      setError('Smart contract call failed. Check console for details.');
+    }
+  };
+
+  const ConditionalButtons = () => {
+    console.log("Account:", account);
+    console.log("Participant 2:", wager.participant2);
+    console.log(account === wager.participant2);
+    if ((account != wager.participant2) && (account != wager.mediator)){
+      console.log("Not Participant 2 or Mediator");
+      return null;
+    } 
+  
+    return (
+      <ButtonContainer>
+        <ActionButton onClick={(e) => handleAcceptDecline(accept, e)}>Accept</ActionButton>
+        <DeclineButton onClick={(e) => handleAcceptDecline(decline, e)}>Decline</DeclineButton>
+      </ButtonContainer>
+    );
+  };
+
+  const handleAcceptDecline = async (acceptDecline,e) => {
+      e.preventDefault();
+    
+      setError('');
+    
+      try {
+        // Connect to MetaMask
+        if (!window.ethereum) {
+          alert('MetaMask not detected');
+          return;
+        }
+    
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+    
+        const provider = new BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const userAddress = await signer.getAddress();
+        console.log('Connected MetaMask address:', userAddress);
+    
+        const network = await provider.getNetwork();
+        console.log('Current chain ID:', network.chainId);
+    
+        if (network.chainId !== 97n) {
+          alert('Please switch to the Binance Smart Chain Testnet (chainId 97)');
+          return;
+        }
+    
+        // Instantiate contract with signer
+        const contract = new ethers.Contract(contractAddress, contractABI, signer);
+    
+        // Call the smart contract function
+        if(acceptDecline == "accept"){
+          if(account === wager.participant2){
+          const tx = await contract.acceptWager_User2(id);
+    
+          console.log('Transaction submitted:', tx.hash);
+          await tx.wait();
+      
+          alert('Wager accepted successfully!');
+          }
+
+          if(account === wager.mediator){
+            const tx = await contract.acceptWager_Mediator(id);
+      
+            console.log('Transaction submitted:', tx.hash);
+            await tx.wait();
+        
+            alert('Wager accepted successfully!');
+          } 
+        }
+        if(acceptDecline == "decline"){
+          if(account === wager.participant2){
+            const tx = await contract.declineWagerUser2(id);
+      
+            console.log('Transaction submitted:', tx.hash);
+            await tx.wait();
+        
+            alert('Wager accepted successfully!');
+          }
+  
+          if((account === wager.mediator)&&(wager.participant2_status == false)){
+            const tx = await contract.declineWagerMediator1(id);
+      
+            console.log('Transaction submitted:', tx.hash);
+            await tx.wait();
+        
+            alert('Wager accepted successfully!');
+          } 
+
+          if((account === wager.mediator)&&(wager.participant2_status == true)){
+            const tx = await contract.declineWagerMediator2(id);
+      
+            console.log('Transaction submitted:', tx.hash);
+            await tx.wait();
+        
+            alert('Wager accepted successfully!');
+          } 
+        }
+        
+      }
+      catch (err) {
+      console.error('Smart contract call failed:', err);
+      setError('Smart contract call failed. Check console for details.');
+      }
+    };
+
+  useEffect(() => {
+    handleFetchWagers();
+  }, []);
 
   const wager = wagers.find((wager) => wager.id === id);
 
@@ -39,8 +209,8 @@ export default function WagerDetailPage() {
           <StyledHeader>Initiated by: {wager.participant1} </StyledHeader>
           <HeaderRow>
             <StyledHeader>Participant 1</StyledHeader>
-            <StatusIndicator $status={wager.participant1_status}>
-              {wager.participant1_status ? 'Accepted' : 'Pending'}
+            <StatusIndicator $status={true}>
+              {true ? 'Accepted' : 'Unaccepted'}
             </StatusIndicator>
           </HeaderRow>
           <StyledLabel>{wager.participant1}</StyledLabel>
@@ -48,7 +218,7 @@ export default function WagerDetailPage() {
           <HeaderRow>
             <StyledHeader>Participant 2</StyledHeader>
             <StatusIndicator $status={wager.participant2_status}>
-              {wager.participant2_status ? 'Accepted' : 'Pending'}
+              {wager.participant2_status ? 'Accepted' : 'Unaccepted'}
             </StatusIndicator>
           </HeaderRow>
           <StyledLabel>{wager.participant2}</StyledLabel>
@@ -56,7 +226,7 @@ export default function WagerDetailPage() {
           <HeaderRow>
             <StyledHeader>Mediator</StyledHeader>
             <StatusIndicator $status={wager.mediator_status}>
-              {wager.mediator_status ? 'Accepted' : 'Pending'}
+              {wager.mediator_status ? 'Accepted' : 'Unaccepted'}
             </StatusIndicator>
           </HeaderRow>
           <StyledLabel>{wager.mediator}</StyledLabel>
@@ -68,11 +238,7 @@ export default function WagerDetailPage() {
             <StyledHeader>Wager Amount</StyledHeader>
             <StyledLabel>{wager.amount}</StyledLabel>
 
-            <ButtonContainer>
-              <ActionButton onClick={() => console.log('Accepted')}>Accept</ActionButton>
-              <DeclineButton onClick={() => console.log('Declined')}>Decline</DeclineButton>
-            </ButtonContainer>
-            
+            <ConditionalButtons/>
             
           </TextSection>
         </MainInnerWrapper>

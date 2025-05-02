@@ -39,6 +39,9 @@ function Navbar() {
       <FakeLink as="button" onClick={(e) => handleProtectedClick(e, '/inbox')}>
         Inbox
       </FakeLink>
+      <FakeLink as="button" onClick={(e) => handleProtectedClick(e, '/completed')}>
+        Completed
+      </FakeLink>
     </Nav>
   );
 }

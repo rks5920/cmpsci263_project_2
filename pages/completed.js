@@ -57,10 +57,10 @@ export default function InboxPage() {
               description: userWagers[5],
               participant2_status: userWagers[6],
               mediator_status: userWagers[7],
-              amount: ethers.formatEther(userWagers[8])*3*600,
+              amount: ethers.formatEther(userWagers[8]),
               wager_status: userWagers[9]
             };
-            if (parsedWager.wager_status == false){
+            if (parsedWager.wager_status == true){
               fetchedWagers.push(parsedWager);
             }
             console.log("Wager info:", parsedWager);
@@ -83,8 +83,8 @@ export default function InboxPage() {
       <MainContentWrapper>
         <MainInnerWrapper>
           <TextSection>
-            <h1>Pending Wagers</h1>
-            <p>All of your pending incoming and outgoing wagers are listed here.</p>
+            <h1>Completed Wagers</h1>
+            <p>All of your completed incoming and outgoing wagers are listed here.</p>
           </TextSection>
           <InboxContainer>
             {wagers.map((wgr) => (
